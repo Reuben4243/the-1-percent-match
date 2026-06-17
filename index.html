@@ -1,0 +1,2298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The 1% Match — World Cup Football Trivia</title>
+<meta name="description" content="12 World Cup trivia questions, each harder than the last. Can you survive the elimination and make it to the 1% question? Play daily, challenge friends, track your stats.">
+<meta property="og:title" content="The 1% Match — World Cup Football Trivia">
+<meta property="og:description" content="12 questions. 100 contestants. Only the top 1% survive. How far can you get?">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0a0a1a">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: #0a0a1a;
+    color: #fff;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── SCREENS ── */
+  .screen { display: none; flex-direction: column; align-items: center; min-height: 100vh; }
+  .screen.active { display: flex; }
+
+  /* ── START SCREEN (now hub) ── */
+  .logo {
+    font-size: 72px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #ffd700, #ff8c00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+  .logo-sub {
+    font-size: 28px;
+    font-weight: 700;
+    color: #ffd700;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .logo-icon { font-size: 48px; margin-top: 12px; }
+  .start-desc {
+    color: #8888aa;
+    font-size: 15px;
+    max-width: 420px;
+    text-align: center;
+    margin: 24px 0 32px;
+    line-height: 1.6;
+  }
+  .start-btn {
+    background: linear-gradient(135deg, #ffd700, #ff8c00);
+    color: #0a0a1a;
+    border: none;
+    padding: 16px 48px;
+    border-radius: 14px;
+    font-size: 18px;
+    font-weight: 800;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: transform .15s, box-shadow .15s;
+    text-transform: uppercase;
+  }
+  .start-btn:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(255, 215, 0, .3); }
+
+  /* ── GAME SCREEN ── */
+  #gameScreen { padding: 16px 20px 30px; }
+
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 640px;
+    margin-bottom: 12px;
+  }
+  .top-bar .game-logo {
+    font-size: 18px;
+    font-weight: 900;
+    color: #ffd700;
+  }
+  .prize-display {
+    font-size: 14px;
+    color: #8888aa;
+  }
+  .prize-display span { color: #ffd700; font-weight: 700; }
+
+  /* Percentage badge */
+  .pct-badge {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: 900;
+    margin: 8px 0 16px;
+    position: relative;
+    transition: all .4s;
+  }
+  .pct-badge .pct-num { position: relative; z-index: 2; }
+  .pct-badge::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 4px solid;
+    border-color: inherit;
+    opacity: .3;
+  }
+  .pct-badge::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.04);
+  }
+
+  .pct-label {
+    font-size: 13px;
+    color: #8888aa;
+    margin-bottom: 20px;
+  }
+
+  /* Timer bar */
+  .timer-wrap {
+    width: 100%;
+    max-width: 640px;
+    height: 6px;
+    background: rgba(255,255,255,.08);
+    border-radius: 3px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .timer-bar {
+    height: 100%;
+    border-radius: 3px;
+    transition: width .1s linear, background .3s;
+    background: #4ade80;
+  }
+  .timer-bar.warn { background: #fbbf24; }
+  .timer-bar.danger { background: #ef4444; }
+
+  .timer-text {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Question */
+  .question-card {
+    background: linear-gradient(145deg, #16163a, #0f0f2a);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 18px;
+    padding: 28px 28px 24px;
+    max-width: 640px;
+    width: 100%;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .question-card .q-image {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto 18px;
+    display: block;
+    border-radius: 10px;
+  }
+  .question-text {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.5;
+    text-align: center;
+  }
+  .question-visual {
+    text-align: center;
+    font-size: 48px;
+    margin: 16px 0;
+    line-height: 1.4;
+    letter-spacing: 4px;
+  }
+  .question-subtext {
+    text-align: center;
+    font-size: 14px;
+    color: #8888aa;
+    margin-top: 8px;
+  }
+
+  /* Answer options */
+  .options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    max-width: 640px;
+    width: 100%;
+  }
+  .option-btn {
+    background: linear-gradient(145deg, #1a1a3e, #12122a);
+    border: 2px solid rgba(255,255,255,.1);
+    border-radius: 12px;
+    padding: 16px 14px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+    text-align: center;
+    line-height: 1.3;
+  }
+  .option-btn:hover:not(.locked) {
+    border-color: #ffd700;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(255, 215, 0, .12);
+  }
+  .option-btn.selected {
+    border-color: #ffd700;
+    background: rgba(255, 215, 0, .12);
+  }
+  .option-btn.correct {
+    border-color: #4ade80;
+    background: rgba(74, 222, 128, .15);
+    animation: pulseGreen .6s;
+  }
+  .option-btn.wrong {
+    border-color: #ef4444;
+    background: rgba(239, 68, 68, .12);
+    animation: shake .4s;
+  }
+  .option-btn.locked { cursor: default; opacity: .6; }
+  .option-btn.reveal-correct {
+    border-color: #4ade80;
+    background: rgba(74, 222, 128, .1);
+    opacity: 1 !important;
+  }
+
+  @keyframes pulseGreen {
+    0%,100%{ box-shadow: 0 0 0 rgba(74,222,128,0); }
+    50%{ box-shadow: 0 0 24px rgba(74,222,128,.3); }
+  }
+  @keyframes shake {
+    0%,100%{ transform: translateX(0); }
+    25%{ transform: translateX(-6px); }
+    75%{ transform: translateX(6px); }
+  }
+
+  /* Pass button */
+  .pass-row {
+    margin-top: 12px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  .pass-btn {
+    background: rgba(255,255,255,.06);
+    border: 1px solid #444;
+    color: #aaa;
+    padding: 10px 24px;
+    border-radius: 10px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .pass-btn:hover { background: rgba(255,255,255,.1); color: #fff; }
+  .pass-btn:disabled { opacity: .3; cursor: default; }
+  .pass-info { font-size: 12px; color: #666; }
+
+  /* People counter */
+  .people-bar {
+    width: 100%;
+    max-width: 640px;
+    margin-top: 20px;
+  }
+  .people-bar .bar-label {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 4px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .people-track {
+    display: flex;
+    gap: 2px;
+    height: 8px;
+  }
+  .person-dot {
+    flex: 1;
+    border-radius: 2px;
+    background: #4ade80;
+    transition: background .3s;
+  }
+  .person-dot.eliminated { background: #333; }
+
+  /* Elimination interstitial */
+  .elim-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 10, 26, .94);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 90;
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    transition: opacity .3s;
+    pointer-events: none;
+  }
+  .elim-overlay.show { opacity: 1; pointer-events: auto; }
+  .elim-card {
+    text-align: center;
+    max-width: 380px;
+    width: 90vw;
+  }
+  .elim-pct {
+    font-size: 48px;
+    font-weight: 900;
+    margin-bottom: 8px;
+  }
+  .elim-label {
+    font-size: 14px;
+    color: #8888aa;
+    margin-bottom: 20px;
+  }
+  .elim-stat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 10px 0;
+  }
+  .elim-stat .elim-icon { font-size: 28px; }
+  .elim-stat .elim-text {
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .elim-stat .elim-text span { color: #ef4444; }
+  .elim-stat .elim-text .green { color: #4ade80; }
+  .elim-pot {
+    margin-top: 18px;
+    font-size: 14px;
+    color: #8888aa;
+  }
+  .elim-pot .pot-val {
+    font-size: 28px;
+    font-weight: 900;
+    color: #ffd700;
+    display: block;
+    margin-top: 4px;
+  }
+  .elim-remaining {
+    margin-top: 14px;
+    font-size: 15px;
+    color: #94a3b8;
+  }
+  .elim-remaining strong {
+    color: #fff;
+    font-size: 20px;
+  }
+
+  /* ── FINAL DECISION OVERLAY ── */
+  .decision-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 10, 26, .96);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 95;
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    transition: opacity .4s;
+    pointer-events: none;
+  }
+  .decision-overlay.show { opacity: 1; pointer-events: auto; }
+  .decision-card {
+    text-align: center;
+    max-width: 440px;
+    width: 92vw;
+    background: linear-gradient(145deg, #1a1a3e, #0f0f2a);
+    border: 2px solid #ffd700;
+    border-radius: 20px;
+    padding: 32px 28px;
+    box-shadow: 0 0 60px rgba(255, 215, 0, .15);
+    animation: decisionPulse 2s infinite;
+  }
+  @keyframes decisionPulse {
+    0%,100% { box-shadow: 0 0 30px rgba(255, 215, 0, .1); }
+    50% { box-shadow: 0 0 60px rgba(255, 215, 0, .25); }
+  }
+  .decision-card .dec-icon { font-size: 48px; margin-bottom: 10px; }
+  .decision-card h2 {
+    font-size: 24px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #ffd700, #ff8c00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 6px;
+  }
+  .decision-card .dec-sub {
+    color: #8888aa;
+    font-size: 14px;
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+  .decision-card .dec-pot {
+    font-size: 36px;
+    font-weight: 900;
+    color: #ffd700;
+    margin: 12px 0 4px;
+  }
+  .decision-card .dec-pot-label {
+    color: #666;
+    font-size: 12px;
+    margin-bottom: 18px;
+  }
+  .decision-card .dec-or {
+    color: #555;
+    font-size: 13px;
+    margin: 10px 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  .dec-btn {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform .15s, box-shadow .15s;
+    border: none;
+    margin-bottom: 10px;
+  }
+  .dec-btn:hover { transform: scale(1.03); }
+  .dec-btn.play-on {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: #fff;
+    box-shadow: 0 0 20px rgba(239, 68, 68, .2);
+  }
+  .dec-btn.take-money {
+    background: rgba(255,255,255,.06);
+    border: 1px solid #444;
+    color: #aaa;
+  }
+  .dec-btn.take-money:hover { color: #fff; background: rgba(255,255,255,.1); }
+  .dec-warning {
+    margin-top: 6px;
+    font-size: 12px;
+    color: #ef4444;
+    opacity: .7;
+  }
+
+  /* ── RESULT SCREEN ── */
+  #resultScreen {
+    justify-content: center;
+    padding: 40px 20px;
+    background: radial-gradient(ellipse at 50% 30%, #1a1a3e 0%, #0a0a1a 70%);
+  }
+  .result-emoji { font-size: 64px; margin-bottom: 16px; }
+  .result-title {
+    font-size: 36px;
+    font-weight: 900;
+    margin-bottom: 8px;
+  }
+  .result-title.gold {
+    background: linear-gradient(135deg, #ffd700, #ff8c00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .result-prize {
+    font-size: 56px;
+    font-weight: 900;
+    color: #ffd700;
+    margin: 12px 0;
+  }
+  .result-detail {
+    color: #8888aa;
+    font-size: 15px;
+    margin: 4px 0;
+    text-align: center;
+    max-width: 500px;
+  }
+  .result-breakdown {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    max-width: 500px;
+  }
+  .rb-item {
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .rb-item.pass { background: rgba(255,255,255,.06); color: #888; }
+  .rb-item.correct { background: rgba(74,222,128,.12); color: #4ade80; }
+  .rb-item.wrong { background: rgba(239,68,68,.12); color: #ef4444; }
+  .rb-item.skipped { background: rgba(255,255,255,.04); color: #555; }
+  .rb-item.took_money { background: rgba(255,215,0,.12); color: #ffd700; }
+
+  .play-again-btn {
+    margin-top: 28px;
+    background: linear-gradient(135deg, #ffd700, #ff8c00);
+    color: #0a0a1a;
+    border: none;
+    padding: 14px 40px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform .15s;
+    text-transform: uppercase;
+  }
+  .play-again-btn:hover { transform: scale(1.05); }
+
+  /* ── HUB SCREEN ── */
+  #hubScreen {
+    justify-content: flex-start;
+    padding: 60px 20px 40px;
+    background: radial-gradient(ellipse at 50% 20%, #1a1a3e 0%, #0a0a1a 70%);
+  }
+  .hub-subtitle {
+    font-size: 15px;
+    color: #8888aa;
+    margin-top: 16px;
+    margin-bottom: 36px;
+    text-align: center;
+    max-width: 360px;
+    line-height: 1.5;
+  }
+  .hub-user-bar {
+    font-size: 14px;
+    color: #8888aa;
+    margin-top: 12px;
+    text-align: center;
+  }
+  .hub-user-bar strong { color: #ffd700; }
+  .hub-user-bar a {
+    color: #666;
+    font-size: 12px;
+    margin-left: 8px;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  .hub-user-bar a:hover { color: #aaa; }
+  .hub-streak {
+    font-size: 15px;
+    font-weight: 700;
+    color: #f97316;
+    margin-bottom: 8px;
+  }
+  .mode-cards {
+    display: flex;
+    gap: 16px;
+    max-width: 960px;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .mode-card {
+    background: linear-gradient(145deg, #1a1a3e, #12122a);
+    border: 2px solid rgba(255,255,255,.08);
+    border-radius: 16px;
+    padding: 28px 22px 24px;
+    flex: 1;
+    min-width: 200px;
+    max-width: 220px;
+    cursor: pointer;
+    transition: all .25s;
+    text-align: center;
+    position: relative;
+  }
+  .mode-card:hover {
+    border-color: #ffd700;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(255, 215, 0, .12);
+  }
+  .mode-card .mode-icon { font-size: 36px; margin-bottom: 12px; }
+  .mode-card .mode-title {
+    font-size: 17px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .mode-card .mode-desc {
+    font-size: 13px;
+    color: #8888aa;
+    line-height: 1.5;
+  }
+  .mode-card .mode-meta {
+    margin-top: 12px;
+    font-size: 12px;
+    color: #ffd700;
+    font-weight: 700;
+  }
+  .mode-card .daily-badge {
+    display: inline-block;
+    background: rgba(74, 222, 128, .15);
+    color: #4ade80;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 8px;
+    margin-top: 10px;
+  }
+  .mode-card .daily-score {
+    display: block;
+    margin-top: 6px;
+    font-size: 12px;
+    color: #8888aa;
+  }
+
+  /* ── PREVIOUS DAYS SCREEN ── */
+  #prevDaysScreen {
+    justify-content: flex-start;
+    padding: 40px 20px;
+    background: radial-gradient(ellipse at 50% 20%, #1a1a3e 0%, #0a0a1a 70%);
+  }
+  .prev-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    width: 100%;
+    max-width: 480px;
+  }
+  .prev-back-btn {
+    background: rgba(255,255,255,.06);
+    border: 1px solid #444;
+    color: #aaa;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .prev-back-btn:hover { background: rgba(255,255,255,.1); color: #fff; }
+  .prev-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: #fff;
+  }
+  .prev-list {
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 65vh;
+    overflow-y: auto;
+    padding-right: 4px;
+  }
+  .prev-list::-webkit-scrollbar { width: 4px; }
+  .prev-list::-webkit-scrollbar-track { background: transparent; }
+  .prev-list::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+  .prev-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(145deg, #1a1a3e, #12122a);
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 12px;
+    padding: 14px 18px;
+    transition: all .2s;
+  }
+  .prev-row:hover { border-color: rgba(255,215,0,.3); }
+  .prev-row .prev-date {
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+  }
+  .prev-row .prev-day {
+    font-size: 12px;
+    color: #666;
+    margin-top: 2px;
+  }
+  .prev-row .prev-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .prev-row .prev-score {
+    font-size: 13px;
+    color: #4ade80;
+    font-weight: 600;
+  }
+  .prev-play-btn {
+    background: linear-gradient(135deg, #ffd700, #ff8c00);
+    color: #0a0a1a;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform .15s;
+  }
+  .prev-play-btn:hover { transform: scale(1.05); }
+  .prev-played-icon {
+    color: #4ade80;
+    font-size: 18px;
+  }
+
+  /* ── DAILY MESSAGE ON RESULT ── */
+  .daily-comeback {
+    margin-top: 14px;
+    font-size: 14px;
+    color: #ffd700;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  /* ── LOGIN SCREEN ── */
+  #loginScreen {
+    justify-content: center;
+    padding: 40px 20px;
+    background: radial-gradient(ellipse at 50% 30%, #1a1a3e 0%, #0a0a1a 70%);
+  }
+  .login-box {
+    text-align: center;
+    max-width: 380px;
+    width: 100%;
+  }
+  .login-box .login-label {
+    font-size: 16px;
+    color: #8888aa;
+    margin-bottom: 20px;
+  }
+  .login-input {
+    width: 100%;
+    padding: 16px;
+    border-radius: 12px;
+    border: 2px solid rgba(255,255,255,.1);
+    background: linear-gradient(145deg, #1a1a3e, #12122a);
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    outline: none;
+    margin-bottom: 16px;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  .login-input:focus { border-color: #ffd700; }
+  .login-input::placeholder { color: #555; }
+
+  /* ── SHARE BUTTON ROW ── */
+  .share-row {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .share-btn {
+    background: rgba(255,255,255,.08);
+    border: 1px solid #444;
+    color: #ccc;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  .share-btn:hover { background: rgba(255,255,255,.15); color: #fff; border-color: #666; }
+  .share-btn.copied {
+    background: rgba(74,222,128,.15);
+    border-color: #4ade80;
+    color: #4ade80;
+  }
+
+  /* ── STATS SCREEN ── */
+  #statsScreen {
+    justify-content: flex-start;
+    padding: 40px 20px 40px;
+    background: radial-gradient(ellipse at 50% 20%, #1a1a3e 0%, #0a0a1a 70%);
+  }
+  .stats-container {
+    width: 100%;
+    max-width: 520px;
+  }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .stat-card {
+    background: linear-gradient(145deg, #1a1a3e, #12122a);
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 14px;
+    padding: 18px 16px;
+    text-align: center;
+  }
+  .stat-card .stat-val {
+    font-size: 28px;
+    font-weight: 900;
+    color: #ffd700;
+  }
+  .stat-card .stat-label {
+    font-size: 12px;
+    color: #8888aa;
+    margin-top: 4px;
+  }
+  .elim-dist {
+    background: linear-gradient(145deg, #1a1a3e, #12122a);
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 14px;
+    padding: 20px;
+  }
+  .elim-dist h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 14px;
+  }
+  .dist-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  .dist-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #8888aa;
+    width: 40px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .dist-bar-wrap {
+    flex: 1;
+    height: 16px;
+    background: rgba(255,255,255,.04);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .dist-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width .3s;
+  }
+  .dist-count {
+    font-size: 12px;
+    color: #666;
+    width: 24px;
+    flex-shrink: 0;
+  }
+
+  /* ── MULTIPLAYER SCREEN ── */
+  #multiplayerScreen {
+    justify-content: center;
+    padding: 40px 20px;
+    background: radial-gradient(ellipse at 50% 30%, #1a1a3e 0%, #0a0a1a 70%);
+  }
+  .mp-box {
+    text-align: center;
+    max-width: 420px;
+    width: 100%;
+  }
+  .mp-box h2 {
+    font-size: 24px;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .mp-box .mp-desc {
+    color: #8888aa;
+    font-size: 14px;
+    margin-bottom: 28px;
+  }
+  .mp-choices {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .mp-choice-btn {
+    background: linear-gradient(145deg, #1a1a3e, #12122a);
+    border: 2px solid rgba(255,255,255,.1);
+    border-radius: 14px;
+    padding: 22px 20px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all .2s;
+    text-align: center;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  .mp-choice-btn:hover { border-color: #ffd700; transform: translateY(-2px); }
+  .mp-choice-btn .mp-choice-icon { font-size: 28px; display: block; margin-bottom: 6px; }
+
+  /* Create / Join sub-screens */
+  .mp-create-box, .mp-join-box {
+    display: none;
+    text-align: center;
+    max-width: 420px;
+    width: 100%;
+  }
+  .mp-create-box.active, .mp-join-box.active { display: block; }
+  .mp-code-display {
+    font-size: 48px;
+    font-weight: 900;
+    letter-spacing: 8px;
+    color: #ffd700;
+    margin: 20px 0 12px;
+    font-family: monospace;
+  }
+  .mp-code-hint {
+    font-size: 13px;
+    color: #8888aa;
+    margin-bottom: 18px;
+  }
+  .mp-join-input {
+    width: 100%;
+    max-width: 240px;
+    padding: 14px;
+    border-radius: 12px;
+    border: 2px solid rgba(255,255,255,.1);
+    background: linear-gradient(145deg, #1a1a3e, #12122a);
+    color: #ffd700;
+    font-size: 28px;
+    font-weight: 900;
+    text-align: center;
+    letter-spacing: 6px;
+    outline: none;
+    margin-bottom: 16px;
+    font-family: monospace;
+    text-transform: uppercase;
+  }
+  .mp-join-input:focus { border-color: #ffd700; }
+  .mp-join-input::placeholder { color: #444; font-size: 16px; letter-spacing: 2px; font-weight: 400; }
+
+  /* Responsive */
+  @media (max-width: 500px) {
+    .logo { font-size: 52px; }
+    .logo-sub { font-size: 20px; letter-spacing: 4px; }
+    .question-text { font-size: 16px; }
+    .option-btn { font-size: 14px; padding: 12px 10px; }
+    .pct-badge { width: 80px; height: 80px; font-size: 26px; }
+    .result-prize { font-size: 40px; }
+    .options { gap: 8px; }
+    .mode-cards { flex-direction: column; align-items: center; }
+    .mode-card { max-width: 320px; min-width: 0; width: 100%; }
+    #hubScreen { padding: 40px 16px 30px; }
+    .stats-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════ LOGIN SCREEN ════════ -->
+<div class="screen" id="loginScreen">
+  <div class="logo">1%</div>
+  <div class="logo-sub">MATCH</div>
+  <div class="logo-icon">⚽</div>
+  <div class="login-box" style="margin-top: 32px;">
+    <div class="login-label">Enter your name to get started</div>
+    <input type="text" class="login-input" id="loginInput" placeholder="Your name..." maxlength="24" autocomplete="off">
+    <button class="start-btn" onclick="doLogin()" id="loginBtn">Let's Go</button>
+  </div>
+</div>
+
+<!-- ════════ HUB SCREEN ════════ -->
+<div class="screen" id="hubScreen">
+  <div class="logo">1%</div>
+  <div class="logo-sub">MATCH</div>
+  <div class="logo-icon">⚽</div>
+  <div class="hub-user-bar" id="hubUserBar"></div>
+  <p class="hub-subtitle">
+    12 World Cup trivia questions. Each one harder than the last.<br>
+    Can you survive the elimination and reach the 1% question?
+  </p>
+  <div class="hub-streak" id="hubStreak"></div>
+  <div class="mode-cards">
+    <div class="mode-card" onclick="startDaily()">
+      <div class="mode-icon">🏆</div>
+      <div class="mode-title">Daily Challenge</div>
+      <div class="mode-desc">Same questions for everyone, once per day</div>
+      <div class="mode-meta" id="dailyDate"></div>
+      <div id="dailyStatus"></div>
+    </div>
+    <div class="mode-card" onclick="showPrevDays()">
+      <div class="mode-icon">📅</div>
+      <div class="mode-title">Previous Days</div>
+      <div class="mode-desc">Play any challenge from the last 30 days</div>
+      <div class="mode-meta">30 days of quizzes</div>
+    </div>
+    <div class="mode-card" onclick="startUnlimited()">
+      <div class="mode-icon">♾️</div>
+      <div class="mode-title">Unlimited</div>
+      <div class="mode-desc">Random questions, no limits, play forever</div>
+      <div class="mode-meta">No restrictions</div>
+    </div>
+    <div class="mode-card" onclick="showMultiplayer()">
+      <div class="mode-icon">👥</div>
+      <div class="mode-title">Play With Friends</div>
+      <div class="mode-desc">Share a code and play the same questions</div>
+      <div class="mode-meta">Same seed, same challenge</div>
+    </div>
+  </div>
+  <div style="margin-top: 24px;">
+    <div class="mode-card" onclick="showStats()" style="max-width: 320px; min-width: 260px;">
+      <div class="mode-icon">📊</div>
+      <div class="mode-title">My Stats</div>
+      <div class="mode-desc">View your performance history</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ MULTIPLAYER SCREEN ════════ -->
+<div class="screen" id="multiplayerScreen">
+  <div class="prev-header">
+    <button class="prev-back-btn" onclick="showHub()">← Back</button>
+    <div class="prev-title">Play With Friends</div>
+  </div>
+  <div class="mp-box" id="mpChoices">
+    <h2>👥 Multiplayer</h2>
+    <div class="mp-desc">Play the exact same questions as your friends using a shared code.</div>
+    <div class="mp-choices">
+      <button class="mp-choice-btn" onclick="mpCreate()">
+        <span class="mp-choice-icon">🎲</span>
+        Create Game
+      </button>
+      <button class="mp-choice-btn" onclick="mpShowJoin()">
+        <span class="mp-choice-icon">🔗</span>
+        Join Game
+      </button>
+    </div>
+  </div>
+  <div class="mp-create-box" id="mpCreateBox">
+    <h2 style="font-size:20px; color:#fff; margin-bottom:8px;">Your Game Code</h2>
+    <div class="mp-code-display" id="mpCodeDisplay"></div>
+    <div class="mp-code-hint">Share this code with friends so they play the same questions</div>
+    <button class="share-btn" onclick="mpCopyLink()" id="mpCopyLinkBtn">📋 Copy Link</button>
+    <div style="margin-top: 20px;">
+      <button class="start-btn" onclick="mpStartCreated()">Start Playing</button>
+    </div>
+    <div style="margin-top: 14px;">
+      <button class="prev-back-btn" onclick="mpBackToChoices()">← Back</button>
+    </div>
+  </div>
+  <div class="mp-join-box" id="mpJoinBox">
+    <h2 style="font-size:20px; color:#fff; margin-bottom:16px;">Enter Game Code</h2>
+    <input type="text" class="mp-join-input" id="mpJoinInput" placeholder="CODE" maxlength="6" autocomplete="off">
+    <div style="margin-top:4px;">
+      <button class="start-btn" onclick="mpJoin()">Start</button>
+    </div>
+    <div style="margin-top: 14px;">
+      <button class="prev-back-btn" onclick="mpBackToChoices()">← Back</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ STATS SCREEN ════════ -->
+<div class="screen" id="statsScreen">
+  <div class="prev-header">
+    <button class="prev-back-btn" onclick="showHub()">← Back</button>
+    <div class="prev-title">📊 My Stats</div>
+  </div>
+  <div class="stats-container" id="statsContainer"></div>
+</div>
+
+<!-- ════════ PREVIOUS DAYS SCREEN ════════ -->
+<div class="screen" id="prevDaysScreen">
+  <div class="prev-header">
+    <button class="prev-back-btn" onclick="showHub()">← Back</button>
+    <div class="prev-title">Previous Days</div>
+  </div>
+  <div class="prev-list" id="prevList"></div>
+</div>
+
+<!-- ════════ GAME SCREEN ════════ -->
+<div class="screen" id="gameScreen">
+  <div class="top-bar">
+    <div class="game-logo">⚽ THE 1% MATCH</div>
+    <div class="prize-display">Prize pot: <span id="prizePot">£0</span></div>
+  </div>
+
+  <div class="pct-badge" id="pctBadge" style="border-color: #4ade80; color: #4ade80;">
+    <span class="pct-num" id="pctNum">90%</span>
+  </div>
+  <div class="pct-label" id="pctLabel">Question 1 of 12</div>
+
+  <div class="timer-wrap"><div class="timer-bar" id="timerBar"></div></div>
+  <div class="timer-text" id="timerText">15s</div>
+
+  <div class="question-card">
+    <div class="question-text" id="questionText"></div>
+    <div class="question-visual" id="questionVisual"></div>
+    <div class="question-subtext" id="questionSubtext"></div>
+  </div>
+
+  <div class="options" id="options"></div>
+
+  <div class="pass-row">
+    <button class="pass-btn" id="passBtn" onclick="usePass()">🛡️ Use Pass</button>
+    <span class="pass-info" id="passInfo">Available from Q5 (50%)</span>
+  </div>
+
+  <div class="people-bar">
+    <div class="bar-label">
+      <span>Contestants remaining</span>
+      <span id="peopleCount">100</span>
+    </div>
+    <div class="people-track" id="peopleTrack"></div>
+  </div>
+</div>
+
+<!-- ════════ ELIMINATION INTERSTITIAL ════════ -->
+<div class="elim-overlay" id="elimOverlay">
+  <div class="elim-card">
+    <div class="elim-pct" id="elimPct">90%</div>
+    <div class="elim-label" id="elimLabel">question</div>
+    <div class="elim-stat">
+      <span class="elim-icon">🚫</span>
+      <span class="elim-text"><span id="elimCount">10</span> contestants eliminated</span>
+    </div>
+    <div class="elim-remaining">
+      <strong id="elimRemaining">90</strong> still standing
+    </div>
+    <div class="elim-pot">
+      Prize pot
+      <span class="pot-val" id="elimPot">£10,000</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ FINAL DECISION OVERLAY ════════ -->
+<div class="decision-overlay" id="decisionOverlay">
+  <div class="decision-card">
+    <div class="dec-icon">🔥</div>
+    <h2>THE 1% QUESTION</h2>
+    <div class="dec-sub">
+      You've made it further than 99% of contestants.<br>
+      Only the elite answer this one.
+    </div>
+    <div class="dec-pot" id="decPot">£89,000</div>
+    <div class="dec-pot-label">current prize pot</div>
+    <div class="dec-finalists" id="decFinalists" style="display:none; font-size:13px; color:#f97316; margin-bottom:14px; line-height:1.5;"></div>
+    <button class="dec-btn play-on" onclick="playFinalQuestion()">
+      🎯 PLAY FOR THE POT
+    </button>
+    <div class="dec-or">— or —</div>
+    <button class="dec-btn take-money" onclick="takeMoney()">
+      💰 Take £10,000 guaranteed
+    </button>
+    <div class="dec-warning">Get it wrong and you leave with nothing</div>
+  </div>
+</div>
+
+<!-- ════════ RESULT SCREEN ════════ -->
+<div class="screen" id="resultScreen">
+  <div class="result-emoji" id="resultEmoji">🏆</div>
+  <div class="result-title" id="resultTitle">Game Over</div>
+  <div class="result-prize" id="resultPrize">£0</div>
+  <div class="result-detail" id="resultDetail"></div>
+  <div class="result-breakdown" id="resultBreakdown"></div>
+  <div class="share-row" id="shareRow" style="display:none;">
+    <button class="share-btn" onclick="copyShareText()" id="shareBtn">📋 Share Result</button>
+  </div>
+  <div class="daily-comeback" id="dailyComeback" style="display:none;">Come back tomorrow for the next challenge</div>
+  <button class="play-again-btn" onclick="showHub()">Back to Menu</button>
+</div>
+
+<script>
+// ── QUESTION BANK — WORLD CUP ONLY ────────────────────────────
+const QUESTION_BANK = {
+  90: [
+    { q: "How many teams compete in a FIFA World Cup finals tournament (as of 2022)?", options: ["24","32","48","64"], answer: 1 },
+    { q: "What colour is the FIFA World Cup trophy?", options: ["Silver","Gold","Bronze","Platinum"], answer: 1 },
+    { q: "How often is the FIFA World Cup held?", options: ["Every year","Every 2 years","Every 4 years","Every 6 years"], answer: 2 },
+    { q: "Which country hosted the 2022 FIFA World Cup?", options: ["Russia","Brazil","Qatar","Saudi Arabia"], answer: 2 },
+    { q: "How many players from each team are on the pitch at kick-off in a World Cup match?", options: ["9","10","11","12"], answer: 2 },
+    { q: "Who won the 2022 FIFA World Cup?", options: ["France","Brazil","Argentina","Croatia"], answer: 2 },
+    { q: "What is the standard length of a World Cup match (without extra time)?", options: ["60 minutes","80 minutes","90 minutes","120 minutes"], answer: 2 },
+    { q: "Which continent has produced the most World Cup winners?", options: ["Europe","South America","Africa","Asia"], answer: 1 },
+    { q: "What colour shirts does Brazil traditionally wear at the World Cup?", options: ["Blue","White","Yellow","Green"], answer: 2 },
+    { q: "The World Cup final is the last match of the tournament. True or false?", options: ["True","False","Only in some years","It depends on the format"], answer: 0 },
+    { q: "What sport is the FIFA World Cup?", options: ["Rugby","Cricket","Football (Soccer)","Basketball"], answer: 2 },
+  ],
+  80: [
+    { q: "Which country has won the most FIFA World Cups?", options: ["Germany","Argentina","Italy","Brazil"], answer: 3 },
+    { q: "How many times has Brazil won the World Cup?", options: ["3","4","5","6"], answer: 2 },
+    { q: "In which country was the 2018 World Cup held?", options: ["Brazil","South Africa","Russia","Japan"], answer: 2 },
+    { q: "Who scored a hat-trick in the 2022 World Cup final?", options: ["Lionel Messi","Kylian Mbappe","Julian Alvarez","Olivier Giroud"], answer: 1 },
+    { q: "Which two countries co-hosted the 2002 World Cup?", options: ["China & Japan","Japan & South Korea","South Korea & China","Australia & Japan"], answer: 1 },
+    { q: "Which legendary player is known as 'The King of Football' and won 3 World Cups?", options: ["Maradona","Pele","Ronaldo","Zidane"], answer: 1 },
+    { q: "What happens if a World Cup knockout match is tied after 90 minutes?", options: ["Penalty shootout immediately","Extra time then penalties if still tied","Replay the match","Golden goal"], answer: 1 },
+    { q: "Which European country has won the World Cup four times?", options: ["France","Spain","Italy","Germany"], answer: 3 },
+    { q: "The World Cup was not held during which years due to World War II?", options: ["1938 & 1942","1942 & 1946","1940 & 1944","1936 & 1940"], answer: 1 },
+    { q: "Which country hosted the first World Cup held in Africa?", options: ["Nigeria","Egypt","South Africa","Morocco"], answer: 2 },
+  ],
+  70: [
+    { q: "Who captained Argentina to World Cup victory in 2022?", options: ["Angel Di Maria","Paulo Dybala","Lionel Messi","Lautaro Martinez"], answer: 2 },
+    { q: "Which country hosted the 2014 World Cup?", options: ["South Africa","Russia","Brazil","Germany"], answer: 2 },
+    { q: "Who headbutted Marco Materazzi in the 2006 World Cup final?", options: ["Thierry Henry","Patrick Vieira","Zinedine Zidane","David Trezeguet"], answer: 2 },
+    { q: "Germany famously beat Brazil 7-1 in the 2014 World Cup. What round was it?", options: ["Quarter-final","Semi-final","Final","Group stage"], answer: 1 },
+    { q: "Which country won the 2010 World Cup in South Africa?", options: ["Netherlands","Germany","Spain","Brazil"], answer: 2 },
+    { q: "What is the name of the official World Cup match ball used in 2022?", options: ["Jabulani","Brazuca","Telstar","Al Rihla"], answer: 3 },
+    { q: "England have won the World Cup once. In which year?", options: ["1962","1966","1970","1974"], answer: 1 },
+    { q: "Which player has scored the most goals in World Cup history?", options: ["Ronaldo Nazario","Miroslav Klose","Pele","Gerd Muller"], answer: 1 },
+    { q: "How many World Cups did Lionel Messi play in?", options: ["3","4","5","6"], answer: 2 },
+    { q: "Which country has appeared in the most World Cup finals (the final match)?", options: ["Brazil","Germany","Italy","Argentina"], answer: 1 },
+  ],
+  60: [
+    { q: "Who scored the winning goal in the 2010 World Cup final?", options: ["David Villa","Xavi","Andres Iniesta","Carles Puyol"], answer: 2, sub: "Iniesta scored in extra time against the Netherlands" },
+    { q: "In the 1986 World Cup, who scored the 'Hand of God' goal?", options: ["Pele","Ronaldinho","Diego Maradona","Lionel Messi"], answer: 2, sub: "Argentina vs England, 1986 World Cup quarter-final" },
+    { q: "Which country hosted the first ever FIFA World Cup in 1930?", options: ["Brazil","Italy","France","Uruguay"], answer: 3, sub: "Uruguay also won that first tournament" },
+    { q: "Who won the Golden Boot (top scorer) at the 2018 World Cup?", options: ["Kylian Mbappe","Antoine Griezmann","Harry Kane","Romelu Lukaku"], answer: 2, sub: "Kane scored 6 goals in Russia" },
+    { q: "Which team did Germany beat 7-1 in the 2014 semi-final?", options: ["Argentina","Spain","Brazil","France"], answer: 2, sub: "The 'Mineirazo' — five German goals in 18 first-half minutes" },
+    { q: "How many times has Italy won the World Cup?", options: ["2","3","4","5"], answer: 2, sub: "Italy won in 1934, 1938, 1982, and 2006" },
+    { q: "Who captained England to World Cup victory in 1966?", options: ["Bobby Charlton","Geoff Hurst","Bobby Moore","Gordon Banks"], answer: 2, sub: "Moore lifted the Jules Rimet trophy at Wembley" },
+    { q: "Which was the first Asian country to reach a World Cup semi-final?", options: ["Japan","Iran","South Korea","Saudi Arabia"], answer: 2, sub: "South Korea in 2002 on home soil" },
+    { q: "What was controversial about Geoff Hurst's second goal in the 1966 final?", options: ["He was offside","The ball may not have crossed the line","He handled it","The whistle had blown"], answer: 1, sub: "The shot hit the crossbar and bounced down — still debated today" },
+    { q: "Which country won the World Cup in 2006?", options: ["France","Germany","Brazil","Italy"], answer: 3, sub: "Italy beat France on penalties in Berlin" },
+  ],
+  50: [
+    { q: "Who won the Golden Ball (best player) at the 2014 World Cup?", options: ["Thomas Muller","Lionel Messi","James Rodriguez","Neymar"], answer: 1, sub: "Messi won despite Argentina losing the final" },
+    { q: "How many goals did Miroslav Klose score in World Cup history?", options: ["14","15","16","17"], answer: 2, sub: "16 goals across four World Cups (2002-2014)" },
+    { q: "Which country hosted the 1994 World Cup?", options: ["Mexico","USA","Italy","France"], answer: 1, sub: "The first World Cup held in the United States" },
+    { q: "Who was sent off in the 2006 World Cup final?", options: ["Marco Materazzi","Patrick Vieira","Zinedine Zidane","Gennaro Gattuso"], answer: 2, sub: "Zidane headbutted Materazzi and was red-carded in his final match" },
+    { q: "What was the 'Miracle of Bern'?", options: ["Switzerland reaching a semi-final","West Germany beating Hungary in the 1954 final","Austria beating Brazil","Italy winning in extra time"], answer: 1, sub: "Hungary were massive favourites but lost 3-2" },
+    { q: "Which player scored the fastest hat-trick in World Cup history?", options: ["Gerd Muller","Laszlo Kiss","Pele","Fabio Cannavaro"], answer: 1, sub: "Kiss scored 3 goals in 7 minutes for Hungary vs El Salvador in 1982" },
+    { q: "Which World Cup was the first to use the Video Assistant Referee (VAR)?", options: ["2014 Brazil","2018 Russia","2022 Qatar","It hasn't been used yet"], answer: 1, sub: "VAR was introduced at the 2018 World Cup in Russia" },
+    { q: "How many World Cups did Pele win as a player?", options: ["1","2","3","4"], answer: 2, sub: "1958, 1962, and 1970" },
+    { q: "Who scored the most goals in a single World Cup tournament?", options: ["Gerd Muller (1970)","Just Fontaine (1958)","Ronaldo (2002)","Sandor Kocsis (1954)"], answer: 1, sub: "Fontaine scored 13 goals for France in 1958 — a record that still stands" },
+    { q: "Which country won the first World Cup to use a penalty shootout in the final?", options: ["Argentina (1978)","Brazil (1994)","Italy (2006)","Argentina (2022)"], answer: 1, sub: "Brazil beat Italy on penalties in the 1994 final at the Rose Bowl" },
+  ],
+  40: [
+    { q: "Who scored the fastest goal in World Cup history?", options: ["Ronaldo","Hakan Sukur","Miroslav Klose","Rivaldo"], answer: 1, sub: "Sukur scored after 11 seconds for Turkey vs South Korea in 2002" },
+    { q: "Which World Cup introduced the group stage format that lasted until 2022?", options: ["1950","1958","1982","1998"], answer: 3, sub: "The 32-team format with 8 groups of 4 began in France 1998" },
+    { q: "Who was the oldest player to score in a World Cup match?", options: ["Roger Milla","Peter Shilton","Dino Zoff","Essam El-Hadary"], answer: 0, sub: "Cameroon's Milla scored at 42 years old in 1994" },
+    { q: "Which was the first country to win the World Cup on a different continent from their own?", options: ["Argentina (1986)","Brazil (1958)","Spain (2010)","Germany (2014)"], answer: 1, sub: "Brazil won in Sweden in 1958" },
+    { q: "In the 1950 World Cup, what format decided the champion?", options: ["A single final match","A final round-robin group","Extra-time golden goal","Best of three finals"], answer: 1, sub: "There was no single final — Uruguay beat Brazil in the decisive final group match" },
+    { q: "Who was the first player to be sent off in a World Cup final?", options: ["Zinedine Zidane","Marcel Desailly","Pedro Monzon","Gustavo Dezotti"], answer: 2, sub: "Argentina's Monzon was red-carded in the 1990 final vs West Germany" },
+    { q: "How many World Cups has the host nation won?", options: ["4","5","6","7"], answer: 2, sub: "Uruguay 1930, Italy 1934, England 1966, W. Germany 1974, Argentina 1978, France 1998" },
+    { q: "What was the 'Battle of Santiago'?", options: ["A violent 1962 WC match between Chile and Italy","A dispute over hosting rights","A stadium collapse","A referee strike"], answer: 0, sub: "The 1962 group match featured punches, kicks and two red cards" },
+    { q: "Which country has qualified for the most World Cups without ever winning?", options: ["Netherlands","Mexico","Belgium","Switzerland"], answer: 1, sub: "Mexico has appeared in 17 World Cups without winning" },
+    { q: "Who won the first ever Adidas Golden Shoe at a World Cup?", options: ["Eusebio (1966)","Gerd Muller (1970)","Mario Kempes (1978)","Paolo Rossi (1982)"], answer: 1, sub: "Muller's 10 goals in 1970 won the first official Golden Boot award" },
+  ],
+  30: [
+    { q: "Which country lost the most World Cup finals without ever winning the tournament?", options: ["Netherlands","Hungary","Czechoslovakia","Sweden"], answer: 0, sub: "The Netherlands lost finals in 1974, 1978, and 2010" },
+    { q: "Who scored the 'Goal of the Century' at the 1986 World Cup?", options: ["Pele","Zinedine Zidane","Diego Maradona","Michel Platini"], answer: 2, sub: "Maradona dribbled past 5 England players — same match as the Hand of God" },
+    { q: "Which World Cup saw the most total goals scored?", options: ["1954 Switzerland","1998 France","2014 Brazil","2022 Qatar"], answer: 0, sub: "The 1954 World Cup had 140 goals in 26 matches (5.38 per game)" },
+    { q: "What is the record for biggest World Cup finals victory margin?", options: ["Hungary 10-1 El Salvador","Hungary 9-0 South Korea","Germany 8-0 Saudi Arabia","Australia 31-0 American Samoa"], answer: 0, sub: "Hungary beat El Salvador 10-1 in 1982. The Australia match was a qualifier." },
+    { q: "How many different countries have won the FIFA World Cup?", options: ["6","7","8","9"], answer: 2, sub: "Brazil, Germany, Italy, Argentina, France, Uruguay, England, Spain" },
+    { q: "Who was the first African nation to reach the World Cup quarter-finals?", options: ["Nigeria","Ghana","Cameroon","Senegal"], answer: 2, sub: "Cameroon at Italia '90, led by 38-year-old Roger Milla" },
+    { q: "Which player appeared in the most World Cup tournaments?", options: ["Lothar Matthaus","Lionel Messi","Gianluigi Buffon","Antonio Carbajal & Rafael Marquez"], answer: 3, sub: "Both Carbajal and Marquez appeared in 5 World Cups" },
+    { q: "What year was the World Cup trophy changed from the Jules Rimet to the current FIFA World Cup Trophy?", options: ["1966","1970","1974","1978"], answer: 2, sub: "Brazil kept the Jules Rimet trophy after their third win in 1970; the new trophy debuted in 1974" },
+    { q: "Which team won the 'Group of Death' at the 2014 World Cup containing Spain, Netherlands, Chile, and Australia?", options: ["Spain","Netherlands","Chile","It was a tie"], answer: 1, sub: "Netherlands topped the group, famously thrashing Spain 5-1" },
+    { q: "How many penalty shootouts have decided World Cup finals?", options: ["1","2","3","4"], answer: 2, sub: "1994 (Brazil), 2006 (Italy), 2022 (Argentina)" },
+  ],
+  20: [
+    { q: "Who refereed the 1966 World Cup final?", options: ["Gottfried Dienst","Tofiq Bahramov","Ken Aston","Jack Taylor"], answer: 0, sub: "Swiss referee Dienst officiated; Bahramov was the linesman who awarded the controversial goal" },
+    { q: "Which player has made the most World Cup final appearances?", options: ["Cafu","Pele","Kylian Mbappe","Franz Beckenbauer"], answer: 0, sub: "Cafu appeared in 3 finals: 1994, 1998, and 2002" },
+    { q: "What was the score when North Korea sensationally beat Italy at the 1966 World Cup?", options: ["2-1","1-0","3-2","2-0"], answer: 1, sub: "Pak Doo-ik scored the only goal at Ayresome Park, Middlesbrough" },
+    { q: "Who is the only goalkeeper to have won the World Cup Golden Ball (best player)?", options: ["Gianluigi Buffon","Oliver Kahn","Lev Yashin","Gordon Banks"], answer: 1, sub: "Germany's Kahn won the Golden Ball at the 2002 World Cup" },
+    { q: "In what minute did Sergio Aguero-style last-gasp goals decide the 1950 World Cup? When did Ghiggia score the winning goal vs Brazil?", options: ["11th minute","34th minute","65th minute","79th minute"], answer: 3, sub: "Alcides Ghiggia scored in the 79th minute to seal Uruguay's famous 2-1 win in the 'Maracanazo'" },
+    { q: "Which World Cup was the first to be broadcast on television?", options: ["1950 Brazil","1954 Switzerland","1958 Sweden","1962 Chile"], answer: 1, sub: "The 1954 World Cup in Switzerland was the first to be televised" },
+    { q: "Who was the youngest player to score in a World Cup final?", options: ["Pele","Kylian Mbappe","Geoff Hurst","Zinedine Zidane"], answer: 0, sub: "Pele was 17 years 249 days old when he scored in the 1958 final vs Sweden" },
+    { q: "How many red cards were shown in the 2006 World Cup — the most in a single tournament?", options: ["20","24","28","32"], answer: 2, sub: "28 red cards, including Zidane's in the final" },
+    { q: "Which country has been eliminated in the World Cup quarter-finals the most times?", options: ["England","Brazil","Germany","Mexico"], answer: 0, sub: "England have been knocked out at the quarter-final stage 7 times" },
+    { q: "What was unique about the 1958 World Cup in Sweden?", options: ["First with TV coverage worldwide","All British nations qualified","It was the first time all matches were played in one city","Brazil wore blue in the final"], answer: 3, sub: "Brazil's yellow clashed with Sweden's yellow, so Brazil wore blue shirts in the final" },
+  ],
+  15: [
+    { q: "Who is the youngest player to appear in a World Cup match?", options: ["Pele","Norman Whiteside","Femi Opabunmi","Samuel Eto'o"], answer: 1, sub: "Northern Ireland's Whiteside was 17 years 41 days old in 1982" },
+    { q: "Which World Cup was the first to use penalty shootouts to decide knockout matches?", options: ["1974 West Germany","1978 Argentina","1982 Spain","1986 Mexico"], answer: 2, sub: "The first actual World Cup shootout was in 1982, West Germany vs France" },
+    { q: "Who scored for both teams in a World Cup final?", options: ["Sergio Ramos","Mario Mandzukic","Gareth Bale","Cristiano Ronaldo"], answer: 1, sub: "Mandzukic scored an own goal AND a goal in the 2018 final vs France" },
+    { q: "How many goals did Just Fontaine score in the 1958 World Cup?", options: ["10","11","13","15"], answer: 2, sub: "13 goals in 6 matches — a single-tournament record that still stands" },
+    { q: "Which country won the 1934 World Cup held in Italy?", options: ["Brazil","Uruguay","Italy","Czechoslovakia"], answer: 2, sub: "Italy beat Czechoslovakia 2-1 in the final with extra time" },
+    { q: "What was the 'Disgrace of Gijon'?", options: ["A violent match in the 1982 World Cup","West Germany and Austria appearing to collude in 1982","A referee bribery scandal","A player attacking a referee"], answer: 1, sub: "Both teams needed a 1-0 German win for both to progress; the second half was barely competitive" },
+    { q: "Who holds the record for most World Cup matches played as a manager?", options: ["Vittorio Pozzo","Helmut Schon","Carlos Alberto Parreira","Bora Milutinovic"], answer: 1, sub: "West Germany's Schon managed 25 World Cup matches from 1966-1978" },
+    { q: "Which player scored in every round of the 2002 World Cup from group stage to final?", options: ["Ronaldo","Rivaldo","Klose","Kahn"], answer: 0, sub: "Ronaldo scored 8 goals including 2 in the final" },
+    { q: "How many goals were scored in the 2022 World Cup final between Argentina and France?", options: ["5","6","7","8"], answer: 1, sub: "3-3 after extra time (6 goals in the match), then Argentina won on penalties" },
+    { q: "What was unique about the 1950 World Cup regarding the final?", options: ["It was decided by a round-robin group, not a final","It went to golden goal","It was played over two legs","Three teams tied"], answer: 0, sub: "Uruguay beat Brazil in the final group match — the 'Maracanazo'" },
+  ],
+  10: [
+    { q: "Who was the first substitute used in a World Cup match?", options: ["Anatoly Puzach","Bobby Charlton","Pele","Franz Beckenbauer"], answer: 0, sub: "Soviet Union's Puzach in 1970 — substitutions were first allowed that year" },
+    { q: "How many players have scored hat-tricks in a World Cup final?", options: ["1","2","3","4"], answer: 1, sub: "Geoff Hurst (1966) and Kylian Mbappe (2022)" },
+    { q: "Which country qualified for every single World Cup from 1930 to 2022?", options: ["Germany","Italy","Argentina","Brazil"], answer: 3, sub: "Brazil is the only country to have played in every World Cup" },
+    { q: "Who scored the first ever goal in World Cup history?", options: ["Lucien Laurent","Hector Castro","Guillermo Stabile","Pablo Dorado"], answer: 0, sub: "France's Laurent scored against Mexico on 13 July 1930" },
+    { q: "In which World Cup did India qualify but withdraw before the tournament?", options: ["1938","1950","1954","1962"], answer: 1, sub: "India withdrew from the 1950 World Cup, reportedly due to FIFA banning barefoot play and other logistical issues" },
+    { q: "What was the total attendance at the 1950 World Cup final group match (Brazil vs Uruguay)?", options: ["Around 100,000","Around 150,000","Around 175,000","Around 200,000"], answer: 3, sub: "Around 199,854 at the Maracana — the highest attendance in World Cup history" },
+    { q: "Who is the only player to have been involved in 5 World Cup-winning squads?", options: ["Pele","Cafu","Djalma Santos","Gilmar"], answer: 0, sub: "Pele was in Brazil's squad in 1958, 1962, 1966, 1970 — but only won three. This is actually contested. Pele won 3." },
+    { q: "Which World Cup match is known as the 'Game of the Century'?", options: ["Brazil vs Uruguay 1950","Italy vs West Germany 1970","England vs Argentina 1986","France vs Brazil 1998"], answer: 1, sub: "Italy won 4-3 in extra time in the 1970 semi-final" },
+    { q: "How many different stadiums were used in the 2022 Qatar World Cup?", options: ["6","7","8","10"], answer: 2, sub: "8 stadiums in and around Doha — the most compact World Cup ever" },
+    { q: "Which player received the first-ever yellow card in World Cup history?", options: ["Evgeny Lovchev","Karl-Heinz Schnellinger","Anatoliy Byshovets","Bobby Moore"], answer: 0, sub: "Cards were introduced at the 1970 World Cup; Lovchev of the Soviet Union was first to be booked" },
+  ],
+  5: [
+    { q: "Has a 'golden goal' ever decided a World Cup final?", options: ["Yes, France 1998","Yes, Germany 2002","Yes, Italy 2006","No, never"], answer: 3, sub: "Golden goals decided other World Cup knockout matches but never a final" },
+    { q: "In 1950, who scored the USA's shock 1-0 win over England at the World Cup?", options: ["Joe Gaetjens","Walter Bahr","Ed McIlvenny","Frank Borghi"], answer: 0, sub: "Haitian-born Gaetjens headed the winner in Belo Horizonte" },
+    { q: "What was the first World Cup to feature a penalty shootout in the final?", options: ["1990 Italy","1994 USA","1998 France","2006 Germany"], answer: 1, sub: "Brazil beat Italy 3-2 on penalties after a 0-0 draw at the Rose Bowl" },
+    { q: "Which World Cup ball was widely criticised by goalkeepers for unpredictable movement?", options: ["Fevernova (2002)","Teamgeist (2006)","Jabulani (2010)","Brazuca (2014)"], answer: 2, sub: "The Jabulani was called 'terrible' and 'like a beachball' by multiple goalkeepers" },
+    { q: "Who was the manager of the 'Mighty Magyars' Hungary team that lost the 1954 World Cup final?", options: ["Bela Guttmann","Gusztav Sebes","Nandor Hidegkuti","Gyula Mandi"], answer: 1, sub: "Sebes built the team that beat England 6-3 at Wembley in 1953 but lost the 'Miracle of Bern'" },
+    { q: "Which is the only World Cup where the defending champions and the host nation were both eliminated in the group stage?", options: ["2002","2010","2018","2022"], answer: 1, sub: "Italy (2006 champions) and South Africa (hosts) both went out in the group stage" },
+    { q: "How many own goals were scored at the 2018 World Cup — a record?", options: ["8","10","12","14"], answer: 2, sub: "12 own goals in Russia 2018 — more than all previous World Cups combined" },
+    { q: "Which player holds the record for most minutes played in World Cup history?", options: ["Paolo Maldini","Lothar Matthaus","Miroslav Klose","Cafu"], answer: 1, sub: "Matthaus played 2,216 minutes across 5 World Cups (1982-1998)" },
+    { q: "What was unique about the 1930 World Cup ball?", options: ["Each half used a different ball","It was made of rubber","It had no panels","It was white"], answer: 0, sub: "Argentina provided the ball for the first half, Uruguay for the second in the final" },
+    { q: "Which country's national team went on strike and refused to play at the 1974 World Cup?", options: ["Zaire","Australia","Haiti","None — but Zaire's players threatened to"], answer: 3, sub: "Zaire's players threatened to refuse to play after being denied promised bonuses" },
+  ],
+  1: [
+    { q: "In the 1930 World Cup final, each team provided the match ball for one half. What was the half-time score before Uruguay switched to their ball?", options: ["0-0","1-2 (Argentina leading)","2-1 (Uruguay leading)","1-1"], answer: 1, sub: "Argentina led 2-1 at half-time with their ball; Uruguay won 4-2 using theirs in the second half" },
+    { q: "Which player scored the first ever World Cup goal in 1930 — and in what minute?", options: ["Lucien Laurent, 19th minute","Guillermo Stabile, 8th minute","Pablo Dorado, 15th minute","Louis Laurent, 23rd minute"], answer: 0, sub: "France's Lucien Laurent volleyed home in the 19th minute against Mexico on 13 July 1930" },
+    { q: "In the 1967 Intercontinental Cup, Racing Club vs Celtic needed a playoff. Where was it held?", options: ["Uruguay","Spain","Brazil","Chile"], answer: 0, sub: "Played in Montevideo — Racing Club won 1-0" },
+    { q: "Who is the only player to have scored in the finals of the World Cup, Champions League, UEFA Cup, FA Cup, League Cup, and Charity Shield?", options: ["Steven Gerrard","Eric Cantona","Didier Drogba","Teddy Sheringham"], answer: 3, sub: "Sheringham scored in all six competition finals" },
+    { q: "What is the record scoreline in a FIFA World Cup qualifying match?", options: ["Australia 31-0 American Samoa","Iran 19-0 Guam","Australia 22-0 Tonga","Maldives 0-17 Iran"], answer: 0, sub: "Australia 31-0 American Samoa in a 2001 qualifier — Archie Thompson scored 13" },
+    { q: "Who was the first player to miss a penalty in a World Cup final shootout?", options: ["Franco Baresi","Roberto Baggio","Marcio Santos","Demetrio Albertini"], answer: 0, sub: "Italy's Baresi missed the first penalty of the 1994 final shootout, firing over the bar" },
+    { q: "At which World Cup was a 'third-place play-off' NOT held?", options: ["1930","1950","Both 1930 and 1950","Every World Cup has had one"], answer: 2, sub: "Neither the 1930 nor 1950 tournaments held a third-place match" },
+    { q: "What was the temperature at kick-off of the 2022 World Cup final in Lusail?", options: ["Around 24°C","Around 28°C","Around 32°C","Around 18°C"], answer: 0, sub: "Around 24°C (75°F) at the air-conditioned Lusail Stadium — a mild evening kick-off" },
+    { q: "How many minutes of added time were played in total across both halves and extra time of the 2022 World Cup final?", options: ["15 minutes","20 minutes","25 minutes","30 minutes"], answer: 2, sub: "Approximately 25 minutes of stoppage time were added across the match periods" },
+    { q: "Who was the referee of the 2022 World Cup final?", options: ["Nestor Pitana","Szymon Marciniak","Antonio Mateu Lahoz","Daniele Orsato"], answer: 1, sub: "Poland's Szymon Marciniak refereed Argentina vs France" },
+    { q: "In the 1970 World Cup, which match first featured yellow and red cards?", options: ["Mexico vs USSR","Soviet Union vs Mexico","Both names refer to the same match","England vs Romania"], answer: 2, sub: "The opening match Mexico vs Soviet Union on 31 May 1970 was the first with cards — Lovchev received the first yellow" },
+  ],
+};
+
+const PERCENTAGES = [90, 80, 70, 60, 50, 40, 30, 20, 15, 10, 5, 1];
+const QUESTION_COUNT = 12;
+const TIMER_SECONDS = 15;
+
+// Min/max contestants eliminated at each level (randomised each game)
+const ELIM_RANGES = {
+  90: [2,6], 80: [5,10], 70: [7,13], 60: [10,16],
+  50: [8,14], 40: [10,16], 30: [6,12], 20: [5,11],
+  15: [4,10], 10: [3,8], 5: [2,5], 1: [1,3]
+};
+
+// ── SEEDED PRNG ──────────────────────────────────────────────
+function seededRandom(seed) {
+  let s = 0;
+  for (let i = 0; i < seed.length; i++) s = ((s << 5) - s + seed.charCodeAt(i)) | 0;
+  return function() { s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; };
+}
+
+// ── LOGIN SYSTEM ─────────────────────────────────────────────
+function getUsername() {
+  return localStorage.getItem('1pct_username') || '';
+}
+
+function setUsername(name) {
+  localStorage.setItem('1pct_username', name);
+}
+
+function doLogin() {
+  const input = document.getElementById('loginInput');
+  const name = input.value.trim();
+  if (!name) { input.focus(); return; }
+  setUsername(name);
+  showHub();
+}
+
+function doLogout() {
+  localStorage.removeItem('1pct_username');
+  showScreen('loginScreen');
+  document.getElementById('loginInput').value = '';
+  document.getElementById('loginInput').focus();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('loginInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') doLogin();
+  });
+  document.getElementById('mpJoinInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') mpJoin();
+  });
+});
+
+// ── GAME MODE STATE ──────────────────────────────────────────
+let gameMode = 'unlimited'; // 'daily', 'previous', 'unlimited', 'multiplayer'
+let gameDate = null;        // date string for daily/previous modes
+let gameCode = null;        // multiplayer code
+
+function getTodayStr() {
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+
+function getYesterdayStr() {
+  const d = new Date();
+  d.setDate(d.getDate() - 1);
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+
+function getDailyKey(dateStr) {
+  return '1pct_daily_' + dateStr;
+}
+
+function getDailyResult(dateStr) {
+  try {
+    const raw = localStorage.getItem(getDailyKey(dateStr));
+    return raw ? JSON.parse(raw) : null;
+  } catch(e) { return null; }
+}
+
+function saveDailyResult(dateStr, data) {
+  try { localStorage.setItem(getDailyKey(dateStr), JSON.stringify(data)); } catch(e) {}
+}
+
+function pickQuestionsSeeded(seed) {
+  const rng = seededRandom(seed);
+  return PERCENTAGES.map(pct => {
+    const pool = QUESTION_BANK[pct];
+    const q = pool[Math.floor(rng() * pool.length)];
+    return { ...q, pct };
+  });
+}
+
+function formatDateNice(dateStr) {
+  const d = new Date(dateStr + 'T12:00:00');
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return days[d.getDay()] + ' ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+}
+
+function formatDateShort(dateStr) {
+  const d = new Date(dateStr + 'T12:00:00');
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+}
+
+// ── STREAK SYSTEM ────────────────────────────────────────────
+function getStreakData() {
+  const streak = parseInt(localStorage.getItem('1pct_streak') || '0', 10);
+  const last = localStorage.getItem('1pct_streak_last') || '';
+  return { streak, last };
+}
+
+function updateStreak() {
+  const today = getTodayStr();
+  const yesterday = getYesterdayStr();
+  const { streak, last } = getStreakData();
+
+  if (last === today) return; // Already completed today
+
+  let newStreak;
+  if (last === yesterday) {
+    newStreak = streak + 1;
+  } else {
+    newStreak = 1;
+  }
+
+  localStorage.setItem('1pct_streak', String(newStreak));
+  localStorage.setItem('1pct_streak_last', today);
+
+  // Update best streak in stats
+  const stats = getStats();
+  if (newStreak > stats.bestStreak) {
+    stats.bestStreak = newStreak;
+    saveStats(stats);
+  }
+}
+
+function getCurrentStreak() {
+  const { streak, last } = getStreakData();
+  const today = getTodayStr();
+  const yesterday = getYesterdayStr();
+  if (last === today || last === yesterday) return streak;
+  return 0;
+}
+
+// ── STATS SYSTEM ─────────────────────────────────────────────
+function getStats() {
+  try {
+    const raw = localStorage.getItem('1pct_stats');
+    if (raw) return JSON.parse(raw);
+  } catch(e) {}
+  return {
+    totalGames: 0,
+    totalDaily: 0,
+    bestStreak: 0,
+    onePercentWins: 0,
+    bestPrize: 0,
+    totalCorrect: 0,
+    totalQuestions: 0,
+    elimDist: {} // keys like "90", "80" etc. with count of times eliminated at that level
+  };
+}
+
+function saveStats(stats) {
+  try { localStorage.setItem('1pct_stats', JSON.stringify(stats)); } catch(e) {}
+}
+
+function recordGameStats(won, tookMoney, prizeAmount, correctCount, totalQ, eliminatedAtPct) {
+  const stats = getStats();
+  stats.totalGames++;
+  if (gameMode === 'daily') stats.totalDaily++;
+  if (won) stats.onePercentWins++;
+  const prizeNum = parseInt(String(prizeAmount).replace(/[^0-9]/g, ''), 10) || 0;
+  if (prizeNum > stats.bestPrize) stats.bestPrize = prizeNum;
+  if (tookMoney) {
+    const tookNum = 10000;
+    if (tookNum > stats.bestPrize) stats.bestPrize = tookNum;
+  }
+  stats.totalCorrect += correctCount;
+  stats.totalQuestions += totalQ;
+  if (eliminatedAtPct !== null && !won && !tookMoney) {
+    const key = String(eliminatedAtPct);
+    stats.elimDist[key] = (stats.elimDist[key] || 0) + 1;
+  }
+  if (won) {
+    stats.elimDist['won'] = (stats.elimDist['won'] || 0) + 1;
+  }
+  if (tookMoney) {
+    stats.elimDist['took_money'] = (stats.elimDist['took_money'] || 0) + 1;
+  }
+  saveStats(stats);
+}
+
+function showStats() {
+  const stats = getStats();
+  const container = document.getElementById('statsContainer');
+  const curStreak = getCurrentStreak();
+  const avgCorrect = stats.totalQuestions > 0 ? (stats.totalCorrect / stats.totalGames).toFixed(1) : '0';
+  const oneRate = stats.totalGames > 0 ? ((stats.onePercentWins / stats.totalGames) * 100).toFixed(0) : '0';
+
+  let html = '<div class="stats-grid">';
+  html += statCard(stats.totalGames, 'Games Played');
+  html += statCard(stats.totalDaily, 'Daily Challenges');
+  html += statCard(curStreak, 'Current Streak');
+  html += statCard(stats.bestStreak, 'Best Streak');
+  html += statCard(oneRate + '%', '1% Success Rate');
+  html += statCard(stats.bestPrize > 0 ? '£' + stats.bestPrize.toLocaleString() : '£0', 'Best Prize');
+  html += statCard(avgCorrect, 'Avg Correct / Game');
+  html += statCard(stats.totalCorrect, 'Total Correct Answers');
+  html += '</div>';
+
+  // Elimination distribution
+  html += '<div class="elim-dist"><h3>Elimination Distribution</h3>';
+  const allKeys = [...PERCENTAGES.map(String), 'took_money', 'won'];
+  const maxCount = Math.max(1, ...allKeys.map(k => stats.elimDist[k] || 0));
+
+  for (const pct of PERCENTAGES) {
+    const count = stats.elimDist[String(pct)] || 0;
+    const pctWidth = (count / maxCount) * 100;
+    const color = getPctColor(pct);
+    html += distRow(pct + '%', count, pctWidth, color);
+  }
+  const tookCount = stats.elimDist['took_money'] || 0;
+  html += distRow('Took £', tookCount, (tookCount / maxCount) * 100, '#ffd700');
+  const wonCount = stats.elimDist['won'] || 0;
+  html += distRow('Won!', wonCount, (wonCount / maxCount) * 100, '#4ade80');
+  html += '</div>';
+
+  container.innerHTML = html;
+  showScreen('statsScreen');
+}
+
+function statCard(val, label) {
+  return '<div class="stat-card"><div class="stat-val">' + val + '</div><div class="stat-label">' + label + '</div></div>';
+}
+
+function distRow(label, count, pctWidth, color) {
+  return '<div class="dist-row">' +
+    '<span class="dist-label">' + label + '</span>' +
+    '<div class="dist-bar-wrap"><div class="dist-bar-fill" style="width:' + pctWidth + '%;background:' + color + ';"></div></div>' +
+    '<span class="dist-count">' + count + '</span>' +
+    '</div>';
+}
+
+// ── MULTIPLAYER SYSTEM ───────────────────────────────────────
+function generateGameCode() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let code = '';
+  for (let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
+  return code;
+}
+
+function showMultiplayer() {
+  document.getElementById('mpChoices').style.display = 'block';
+  document.getElementById('mpCreateBox').classList.remove('active');
+  document.getElementById('mpJoinBox').classList.remove('active');
+  showScreen('multiplayerScreen');
+}
+
+function mpBackToChoices() {
+  document.getElementById('mpChoices').style.display = 'block';
+  document.getElementById('mpCreateBox').classList.remove('active');
+  document.getElementById('mpJoinBox').classList.remove('active');
+}
+
+function mpCreate() {
+  const code = generateGameCode();
+  gameCode = code;
+  document.getElementById('mpCodeDisplay').textContent = code;
+  document.getElementById('mpChoices').style.display = 'none';
+  document.getElementById('mpCreateBox').classList.add('active');
+  document.getElementById('mpCopyLinkBtn').textContent = '📋 Copy Link';
+  document.getElementById('mpCopyLinkBtn').classList.remove('copied');
+}
+
+function mpCopyLink() {
+  const url = window.location.origin + window.location.pathname + '?game=' + gameCode;
+  navigator.clipboard.writeText(url).then(() => {
+    const btn = document.getElementById('mpCopyLinkBtn');
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = '📋 Copy Link';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(() => {});
+}
+
+function mpStartCreated() {
+  gameMode = 'multiplayer';
+  startGameWithQuestions(pickQuestionsSeeded('mp_' + gameCode));
+}
+
+function mpShowJoin() {
+  document.getElementById('mpChoices').style.display = 'none';
+  document.getElementById('mpJoinBox').classList.add('active');
+  document.getElementById('mpJoinInput').value = '';
+  document.getElementById('mpJoinInput').focus();
+}
+
+function mpJoin() {
+  const input = document.getElementById('mpJoinInput');
+  const code = input.value.trim().toUpperCase();
+  if (code.length < 3) { input.focus(); return; }
+  gameCode = code;
+  gameMode = 'multiplayer';
+  startGameWithQuestions(pickQuestionsSeeded('mp_' + code));
+}
+
+function checkUrlForMultiplayer() {
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get('game');
+  if (code) {
+    gameCode = code.toUpperCase();
+    gameMode = 'multiplayer';
+    startGameWithQuestions(pickQuestionsSeeded('mp_' + gameCode));
+    // Clean the URL
+    window.history.replaceState({}, document.title, window.location.pathname);
+    return true;
+  }
+  return false;
+}
+
+// ── SHARE RESULT SYSTEM ──────────────────────────────────────
+let lastShareText = '';
+
+function buildShareText(won, tookMoney) {
+  const correctCount = results.filter(r => r === 'correct').length;
+  const lastPct = questions[Math.min(currentQ, QUESTION_COUNT - 1)].pct;
+  const curStreak = getCurrentStreak();
+
+  let title = 'Daily Challenge';
+  if (gameMode === 'multiplayer') {
+    title = 'Multiplayer Game ' + gameCode;
+  } else if (gameMode === 'unlimited') {
+    title = 'Unlimited Mode';
+  } else if (gameMode === 'previous' && gameDate) {
+    title = formatDateShort(gameDate);
+  } else if (gameMode === 'daily') {
+    title = 'Daily Challenge — ' + formatDateShort(getTodayStr());
+  }
+
+  let lines = [];
+  lines.push('⚽ The 1% Match — World Cup 🏆');
+  lines.push(title);
+  lines.push('');
+
+  for (let i = 0; i < QUESTION_COUNT; i++) {
+    const pct = questions[i].pct;
+    let icon;
+    if (i >= results.length) {
+      icon = '⬜';
+    } else if (results[i] === 'correct') {
+      icon = '✅';
+    } else if (results[i] === 'wrong') {
+      icon = '❌';
+    } else if (results[i] === 'pass') {
+      icon = '🛡️';
+    } else if (results[i] === 'took_money') {
+      icon = '💰';
+    } else {
+      icon = '⬜';
+    }
+    lines.push(pct + '% ' + icon);
+  }
+
+  lines.push('');
+  if (won) {
+    const totalWinners = 1 + finalistsWon;
+    const yourShare = Math.floor(prizePool / totalWinners);
+    lines.push('🏆 Made The 1% Match! | £' + yourShare.toLocaleString());
+  } else if (tookMoney) {
+    lines.push('💰 Took the money | £10,000');
+  } else {
+    lines.push('Eliminated at ' + lastPct + '% | £0');
+  }
+
+  if ((gameMode === 'daily') && curStreak > 0) {
+    lines.push('🔥 Streak: ' + curStreak + ' day' + (curStreak !== 1 ? 's' : ''));
+  }
+
+  if (gameMode === 'multiplayer' && gameCode) {
+    lines.push('');
+    lines.push('Code: ' + gameCode);
+  }
+
+  lines.push('');
+  lines.push('Play: ' + window.location.origin + window.location.pathname);
+
+  return lines.join('\n');
+}
+
+function copyShareText() {
+  navigator.clipboard.writeText(lastShareText).then(() => {
+    const btn = document.getElementById('shareBtn');
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = '📋 Share Result';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(() => {});
+}
+
+// ── HUB FUNCTIONS ────────────────────────────────────────────
+function showHub() {
+  const username = getUsername();
+  if (!username) {
+    showScreen('loginScreen');
+    document.getElementById('loginInput').focus();
+    return;
+  }
+
+  // Update user bar
+  document.getElementById('hubUserBar').innerHTML = 'Welcome back, <strong>' + escapeHtml(username) + '</strong> <a onclick="doLogout()">change name</a>';
+
+  updateDailyCard();
+
+  // Show streak
+  const streak = getCurrentStreak();
+  const streakEl = document.getElementById('hubStreak');
+  if (streak > 0) {
+    streakEl.textContent = '🔥 ' + streak + ' day streak';
+    streakEl.style.display = 'block';
+  } else {
+    streakEl.style.display = 'none';
+  }
+
+  showScreen('hubScreen');
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function updateDailyCard() {
+  const today = getTodayStr();
+  document.getElementById('dailyDate').textContent = formatDateNice(today);
+  const statusEl = document.getElementById('dailyStatus');
+  const result = getDailyResult(today);
+  if (result) {
+    statusEl.innerHTML = '<span class="daily-badge">Completed ✓</span><span class="daily-score">' + result.summary + '</span>';
+  } else {
+    statusEl.innerHTML = '';
+  }
+}
+
+function startDaily() {
+  const today = getTodayStr();
+  const existing = getDailyResult(today);
+  if (existing) {
+    gameMode = 'daily';
+    gameDate = today;
+    showDailyResultScreen(existing);
+    return;
+  }
+  gameMode = 'daily';
+  gameDate = today;
+  gameCode = null;
+  startGameWithQuestions(pickQuestionsSeeded(today));
+}
+
+function showDailyResultScreen(data) {
+  document.getElementById('resultEmoji').textContent = data.emoji;
+  const titleEl = document.getElementById('resultTitle');
+  titleEl.textContent = data.title;
+  titleEl.className = 'result-title' + (data.won ? ' gold' : '');
+  document.getElementById('resultPrize').textContent = data.prize;
+  document.getElementById('resultDetail').textContent = data.detail;
+  const bd = document.getElementById('resultBreakdown');
+  bd.innerHTML = data.breakdownHTML || '';
+  document.getElementById('dailyComeback').style.display = 'block';
+
+  // Show share button with saved share text
+  if (data.shareText) {
+    lastShareText = data.shareText;
+    document.getElementById('shareRow').style.display = 'flex';
+    document.getElementById('shareBtn').textContent = '📋 Share Result';
+    document.getElementById('shareBtn').classList.remove('copied');
+  } else {
+    document.getElementById('shareRow').style.display = 'none';
+  }
+
+  showScreen('resultScreen');
+}
+
+function startUnlimited() {
+  gameMode = 'unlimited';
+  gameDate = null;
+  gameCode = null;
+  const qs = PERCENTAGES.map(pct => {
+    const pool = QUESTION_BANK[pct];
+    const q = pool[Math.floor(Math.random() * pool.length)];
+    return { ...q, pct };
+  });
+  startGameWithQuestions(qs);
+}
+
+function showPrevDays() {
+  const list = document.getElementById('prevList');
+  list.innerHTML = '';
+  const today = new Date();
+  for (let i = 1; i <= 30; i++) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    const ds = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+    const result = getDailyResult(ds);
+    const row = document.createElement('div');
+    row.className = 'prev-row';
+    const left = document.createElement('div');
+    left.innerHTML = '<div class="prev-date">' + formatDateNice(ds) + '</div>' +
+      (i === 1 ? '<div class="prev-day">Yesterday</div>' : '');
+    const right = document.createElement('div');
+    right.className = 'prev-status';
+    if (result) {
+      right.innerHTML = '<span class="prev-score">' + result.summary + '</span><span class="prev-played-icon">✓</span>';
+      row.style.cursor = 'pointer';
+      row.onclick = (() => {
+        const dateStr = ds;
+        const res = result;
+        return () => { gameMode = 'previous'; gameDate = dateStr; showDailyResultScreen(res); };
+      })();
+    } else {
+      const btn = document.createElement('button');
+      btn.className = 'prev-play-btn';
+      btn.textContent = 'Play';
+      btn.onclick = ((dateStr) => () => {
+        gameMode = 'previous';
+        gameDate = dateStr;
+        gameCode = null;
+        startGameWithQuestions(pickQuestionsSeeded(dateStr));
+      })(ds);
+      right.appendChild(btn);
+    }
+    row.appendChild(left);
+    row.appendChild(right);
+    list.appendChild(row);
+  }
+  showScreen('prevDaysScreen');
+}
+
+// ── GAME STATE ────────────────────────────────────────────────
+let questions = [];
+let currentQ = 0;
+let timer = null;
+let timeLeft = TIMER_SECONDS;
+let answered = false;
+let passAvailable = true;
+let passUsed = false;
+let passUnlocked = false;
+let prizePool = 0;
+let playerStake = 1000;
+let results = [];
+let peopleLeft = 100;
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function startGame() {
+  startUnlimited();
+}
+
+function startGameWithQuestions(qs) {
+  questions = qs;
+  currentQ = 0;
+  passAvailable = true;
+  passUsed = false;
+  passUnlocked = false;
+  prizePool = 0;
+  playerStake = 1000;
+  results = [];
+  peopleLeft = 100;
+
+  const track = document.getElementById('peopleTrack');
+  track.innerHTML = '';
+  for (let i = 0; i < 20; i++) {
+    const d = document.createElement('div');
+    d.className = 'person-dot';
+    track.appendChild(d);
+  }
+
+  showScreen('gameScreen');
+  loadQuestion();
+}
+
+function getPctColor(pct) {
+  if (pct >= 70) return '#4ade80';
+  if (pct >= 40) return '#fbbf24';
+  if (pct >= 15) return '#f97316';
+  return '#ef4444';
+}
+
+function loadQuestion() {
+  const q = questions[currentQ];
+  const pct = q.pct;
+  const color = getPctColor(pct);
+
+  const badge = document.getElementById('pctBadge');
+  badge.style.borderColor = color;
+  badge.style.color = color;
+  document.getElementById('pctNum').textContent = pct + '%';
+  document.getElementById('pctLabel').textContent = `Question ${currentQ + 1} of ${QUESTION_COUNT}`;
+
+  document.getElementById('prizePot').textContent = '£' + prizePool.toLocaleString();
+
+  document.getElementById('questionText').textContent = q.q;
+  document.getElementById('questionVisual').textContent = q.visual || '';
+  document.getElementById('questionVisual').style.display = q.visual ? 'block' : 'none';
+  document.getElementById('questionSubtext').textContent = '';
+
+  const optDiv = document.getElementById('options');
+  optDiv.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.textContent = opt;
+    btn.onclick = () => selectAnswer(i);
+    optDiv.appendChild(btn);
+  });
+
+  passUnlocked = currentQ >= 4;
+  const passBtn = document.getElementById('passBtn');
+  const passInfo = document.getElementById('passInfo');
+  if (!passAvailable || passUsed) {
+    passBtn.disabled = true;
+    passInfo.textContent = passUsed ? 'Pass already used' : 'Pass not available';
+  } else if (!passUnlocked) {
+    passBtn.disabled = true;
+    passInfo.textContent = `Available from Q5 (50%)`;
+  } else if (currentQ === QUESTION_COUNT - 1) {
+    passBtn.disabled = true;
+    passInfo.textContent = "Can't pass the final question";
+  } else {
+    passBtn.disabled = false;
+    passInfo.textContent = 'Costs your £1,000 stake';
+  }
+
+  updatePeople();
+
+  answered = false;
+  timeLeft = TIMER_SECONDS;
+  updateTimerDisplay();
+  clearInterval(timer);
+  timer = setInterval(tick, 100);
+}
+
+function tick() {
+  if (answered) return;
+  timeLeft -= 0.1;
+  if (timeLeft <= 0) {
+    timeLeft = 0;
+    clearInterval(timer);
+    timeUp();
+  }
+  updateTimerDisplay();
+}
+
+function updateTimerDisplay() {
+  const pct = (timeLeft / TIMER_SECONDS) * 100;
+  const bar = document.getElementById('timerBar');
+  bar.style.width = pct + '%';
+  bar.className = 'timer-bar' + (timeLeft <= 3 ? ' danger' : timeLeft <= 6 ? ' warn' : '');
+  document.getElementById('timerText').textContent = Math.ceil(timeLeft) + 's';
+}
+
+function timeUp() {
+  answered = true;
+  const q = questions[currentQ];
+  const btns = document.querySelectorAll('.option-btn');
+  btns.forEach((b, i) => {
+    b.classList.add('locked');
+    if (i === q.answer) b.classList.add('reveal-correct');
+  });
+  if (q.sub) document.getElementById('questionSubtext').textContent = q.sub;
+  results.push('wrong');
+  eliminatePlayer();
+  setTimeout(() => endGame(), 1800);
+}
+
+// ── ELIMINATION INTERSTITIAL ──────────────────────────────────
+function showElimInterstitial(pct, eliminated, callback) {
+  const color = getPctColor(pct);
+  const overlay = document.getElementById('elimOverlay');
+
+  document.getElementById('elimPct').textContent = pct + '%';
+  document.getElementById('elimPct').style.color = color;
+  document.getElementById('elimLabel').textContent = 'question results';
+  document.getElementById('elimCount').textContent = eliminated;
+  document.getElementById('elimRemaining').textContent = peopleLeft;
+  document.getElementById('elimPot').textContent = '£' + prizePool.toLocaleString();
+
+  overlay.classList.add('show');
+
+  setTimeout(() => {
+    overlay.classList.remove('show');
+    setTimeout(callback, 300);
+  }, 2500);
+}
+
+function selectAnswer(idx) {
+  if (answered) return;
+  answered = true;
+  clearInterval(timer);
+
+  const q = questions[currentQ];
+  const btns = document.querySelectorAll('.option-btn');
+
+  btns.forEach(b => b.classList.add('locked'));
+  btns[idx].classList.add('selected');
+
+  setTimeout(() => {
+    if (idx === q.answer) {
+      btns[idx].classList.remove('selected');
+      btns[idx].classList.add('correct');
+      if (q.sub) document.getElementById('questionSubtext').textContent = q.sub;
+      results.push('correct');
+      const eliminated = eliminatePeople(q.pct);
+
+      setTimeout(() => {
+        showElimInterstitial(q.pct, eliminated, () => {
+          currentQ++;
+          if (currentQ >= QUESTION_COUNT) {
+            reachFinal();
+          } else if (currentQ === QUESTION_COUNT - 1) {
+            showFinalDecision();
+          } else {
+            loadQuestion();
+          }
+        });
+      }, 1000);
+    } else {
+      btns[idx].classList.remove('selected');
+      btns[idx].classList.add('wrong');
+      btns[q.answer].classList.add('reveal-correct');
+      if (q.sub) document.getElementById('questionSubtext').textContent = q.sub;
+      results.push('wrong');
+      eliminatePlayer();
+      setTimeout(() => endGame(), 2000);
+    }
+  }, 800);
+}
+
+function usePass() {
+  if (!passAvailable || passUsed || !passUnlocked || answered) return;
+  if (currentQ === QUESTION_COUNT - 1) return;
+
+  passUsed = true;
+  passAvailable = false;
+  prizePool += playerStake;
+  playerStake = 0;
+  results.push('pass');
+
+  const q = questions[currentQ];
+  const btns = document.querySelectorAll('.option-btn');
+  btns.forEach(b => b.classList.add('locked'));
+  btns[q.answer].classList.add('reveal-correct');
+  if (q.sub) document.getElementById('questionSubtext').textContent = q.sub;
+  answered = true;
+  clearInterval(timer);
+
+  const eliminated = eliminatePeople(q.pct);
+
+  setTimeout(() => {
+    showElimInterstitial(q.pct, eliminated, () => {
+      currentQ++;
+      if (currentQ >= QUESTION_COUNT) {
+        reachFinal();
+      } else if (currentQ === QUESTION_COUNT - 1) {
+        showFinalDecision();
+      } else {
+        loadQuestion();
+      }
+    });
+  }, 1000);
+}
+
+function randInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function eliminatePeople(pct) {
+  const range = ELIM_RANGES[pct] || [3,8];
+  const elim = randInt(range[0], range[1]);
+  const before = peopleLeft;
+  peopleLeft = Math.max(1, peopleLeft - elim);
+  const actualElim = before - peopleLeft;
+  prizePool += actualElim * 1000;
+  updatePeople();
+  document.getElementById('prizePot').textContent = '£' + prizePool.toLocaleString();
+  return actualElim;
+}
+
+function eliminatePlayer() {
+  prizePool += playerStake;
+  playerStake = 0;
+  document.getElementById('prizePot').textContent = '£' + prizePool.toLocaleString();
+}
+
+function updatePeople() {
+  document.getElementById('peopleCount').textContent = peopleLeft;
+  const dots = document.querySelectorAll('.person-dot');
+  const activeDots = Math.ceil((peopleLeft / 100) * dots.length);
+  dots.forEach((d, i) => {
+    d.classList.toggle('eliminated', i >= activeDots);
+  });
+}
+
+let finalistsPlaying = 0;
+let finalistsWon = 0;
+
+function reachFinal() {
+  const otherWinners = Math.max(0, finalistsPlaying > 0 ? randInt(0, Math.min(finalistsPlaying, 2)) : 0);
+  finalistsWon = otherWinners;
+  showResult(true, false);
+}
+
+function showFinalDecision() {
+  const othersRemaining = Math.max(0, peopleLeft - 1);
+  const othersTakeMoney = randInt(Math.floor(othersRemaining * 0.3), Math.floor(othersRemaining * 0.7));
+  finalistsPlaying = othersRemaining - othersTakeMoney;
+
+  document.getElementById('decPot').textContent = '£' + prizePool.toLocaleString();
+  const finalistInfo = document.getElementById('decFinalists');
+  if (finalistInfo) {
+    if (finalistsPlaying > 0) {
+      finalistInfo.textContent = `${finalistsPlaying} other finalist${finalistsPlaying !== 1 ? 's are' : ' is'} also playing — if more than one of you gets it right, the pot is split.`;
+      finalistInfo.style.display = 'block';
+    } else {
+      finalistInfo.textContent = `You're the only one brave enough to play.`;
+      finalistInfo.style.display = 'block';
+    }
+  }
+  document.getElementById('decisionOverlay').classList.add('show');
+}
+
+function playFinalQuestion() {
+  document.getElementById('decisionOverlay').classList.remove('show');
+  loadQuestion();
+}
+
+function takeMoney() {
+  document.getElementById('decisionOverlay').classList.remove('show');
+  results.push('took_money');
+  showResult(false, true);
+}
+
+function endGame() {
+  showResult(false, false);
+}
+
+function showResult(won, tookMoney) {
+  clearInterval(timer);
+
+  const correctCount = results.filter(r => r === 'correct').length;
+  const lastPct = questions[Math.min(currentQ, QUESTION_COUNT - 1)].pct;
+
+  let emoji, title, prize, detail, prizeNum = 0;
+  if (tookMoney) {
+    emoji = '💰';
+    title = 'YOU TOOK THE MONEY!';
+    prize = '£10,000';
+    prizeNum = 10000;
+    detail = `Smart or safe? You walked away with £10,000 guaranteed.`;
+  } else if (won) {
+    const totalWinners = 1 + finalistsWon;
+    const yourShare = Math.floor(prizePool / totalWinners);
+    prizeNum = yourShare;
+    emoji = '🏆';
+    if (totalWinners === 1) {
+      title = 'YOU WON THE 1% MATCH!';
+      prize = '£' + prizePool.toLocaleString();
+      detail = `You're the only winner. The full pot is yours!`;
+    } else {
+      title = 'YOU WON THE 1% MATCH!';
+      prize = '£' + yourShare.toLocaleString();
+      detail = `${totalWinners} contestants got it right — the £${prizePool.toLocaleString()} pot is split. Your share: £${yourShare.toLocaleString()}`;
+    }
+    if (!passUsed && playerStake > 0) {
+      detail += ' Plus you kept your £1,000 stake!';
+    }
+  } else {
+    emoji = correctCount >= 8 ? '😮' : correctCount >= 5 ? '🤔' : '😬';
+    title = `Eliminated at ${lastPct}%`;
+    prize = '£0';
+    detail = `You answered ${correctCount} of ${QUESTION_COUNT} questions correctly`;
+  }
+
+  document.getElementById('resultEmoji').textContent = emoji;
+  const titleEl = document.getElementById('resultTitle');
+  titleEl.textContent = title;
+  titleEl.className = 'result-title' + (won ? ' gold' : '');
+  document.getElementById('resultPrize').textContent = prize;
+  document.getElementById('resultDetail').textContent = detail;
+
+  const bd = document.getElementById('resultBreakdown');
+  bd.innerHTML = '';
+  results.forEach((r, i) => {
+    const item = document.createElement('span');
+    item.className = 'rb-item ' + r;
+    item.textContent = questions[i].pct + '%' + (r === 'pass' ? ' 🛡️' : r === 'correct' ? ' ✓' : r === 'took_money' ? ' 💰' : ' ✗');
+    bd.appendChild(item);
+  });
+  for (let i = results.length; i < QUESTION_COUNT; i++) {
+    const item = document.createElement('span');
+    item.className = 'rb-item skipped';
+    item.textContent = questions[i].pct + '% —';
+    bd.appendChild(item);
+  }
+
+  // Show/hide daily comeback message
+  const dailyComebackEl = document.getElementById('dailyComeback');
+  if (gameMode === 'daily') {
+    dailyComebackEl.style.display = 'block';
+  } else {
+    dailyComebackEl.style.display = 'none';
+  }
+
+  // Build share text
+  lastShareText = buildShareText(won, tookMoney);
+  document.getElementById('shareRow').style.display = 'flex';
+  document.getElementById('shareBtn').textContent = '📋 Share Result';
+  document.getElementById('shareBtn').classList.remove('copied');
+
+  // Update streak for daily mode
+  if (gameMode === 'daily') {
+    updateStreak();
+  }
+
+  // Record stats
+  const elimPct = (!won && !tookMoney) ? lastPct : null;
+  recordGameStats(won, tookMoney, prizeNum, correctCount, QUESTION_COUNT, elimPct);
+
+  // Save result for daily/previous modes
+  if ((gameMode === 'daily' || gameMode === 'previous') && gameDate) {
+    const correctCount2 = results.filter(r => r === 'correct').length;
+    const summaryText = won ? prize : (tookMoney ? '£10,000 (took money)' : correctCount2 + '/' + QUESTION_COUNT + ' correct');
+    saveDailyResult(gameDate, {
+      emoji: emoji,
+      title: title,
+      won: won,
+      prize: prize,
+      detail: detail,
+      summary: summaryText,
+      breakdownHTML: bd.innerHTML,
+      shareText: lastShareText
+    });
+  }
+
+  showScreen('resultScreen');
+}
+
+// ── INITIALIZE ───────────────────────────────────────────────
+function init() {
+  // Check for multiplayer URL param first
+  if (checkUrlForMultiplayer()) return;
+
+  // Check login
+  const username = getUsername();
+  if (username) {
+    showHub();
+  } else {
+    showScreen('loginScreen');
+    setTimeout(() => document.getElementById('loginInput').focus(), 100);
+  }
+}
+
+init();
+
+</script>
+</body>
+</html>
