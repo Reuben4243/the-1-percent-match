@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>How to Play — The 1% Match</title>
+<meta name="description" content="Learn how to play The 1% Match: 12 World Cup trivia questions, 100 virtual contestants, progressive elimination. Only 1% survive.">
+<link rel="canonical" href="https://onepercentmatch.com/how-to-play.html">
+
+<!-- Open Graph -->
+<meta property="og:title" content="How to Play — The 1% Match">
+<meta property="og:description" content="Learn how to play The 1% Match: 12 World Cup trivia questions, 100 virtual contestants, progressive elimination.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://onepercentmatch.com/how-to-play.html">
+<meta property="og:image" content="https://onepercentmatch.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="The 1% Match">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How to Play — The 1% Match">
+<meta name="twitter:description" content="Learn how to play The 1% Match: 12 World Cup trivia questions, 100 virtual contestants, progressive elimination.">
+<meta name="twitter:image" content="https://onepercentmatch.com/og.png">
+
+<!-- PWA -->
+<meta name="theme-color" content="#0a0a1a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="1% Match">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/icon-192.png">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: #0a0a1a;
+    color: #fff;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .page-wrap {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 40px 24px 60px;
+  }
+
+  /* Header */
+  .page-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .page-header a {
+    text-decoration: none;
+  }
+  .header-logo {
+    font-size: 48px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #ffd700, #ff8c00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -1px;
+    line-height: 1;
+  }
+  .header-sub {
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffd700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  /* Page title */
+  .page-title {
+    font-size: 32px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #ffd700, #ff8c00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 12px;
+  }
+  .page-intro {
+    color: #8888aa;
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 40px;
+  }
+
+  /* Sections */
+  .section {
+    margin-bottom: 36px;
+  }
+  .section h2 {
+    font-size: 20px;
+    font-weight: 800;
+    color: #ffd700;
+    margin-bottom: 12px;
+  }
+  .section p, .section li {
+    color: #ccc;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .section p + p {
+    margin-top: 10px;
+  }
+  .section ul {
+    list-style: none;
+    padding: 0;
+  }
+  .section li {
+    padding: 6px 0 6px 20px;
+    position: relative;
+  }
+  .section li::before {
+    content: '>';
+    position: absolute;
+    left: 0;
+    color: #ffd700;
+    font-weight: 700;
+  }
+
+  /* Tier table */
+  .tier-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+  }
+  .tier-table th {
+    text-align: left;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #8888aa;
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+  }
+  .tier-table td {
+    font-size: 14px;
+    color: #ccc;
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+  .tier-table td:first-child {
+    color: #ffd700;
+    font-weight: 700;
+  }
+
+  .highlight {
+    color: #ffd700;
+    font-weight: 700;
+  }
+
+  /* Footer */
+  .site-footer {
+    margin-top: 40px;
+    padding: 20px 0;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .site-footer a {
+    color: #555;
+    font-size: 13px;
+    text-decoration: none;
+    transition: color .2s;
+  }
+  .site-footer a:hover { color: #8888aa; }
+
+  @media (max-width: 500px) {
+    .header-logo { font-size: 36px; }
+    .header-sub { font-size: 13px; letter-spacing: 3px; }
+    .page-title { font-size: 24px; }
+    .page-wrap { padding: 24px 16px 40px; }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <header class="page-header">
+    <a href="/">
+      <div class="header-logo">1%</div>
+      <div class="header-sub">Match</div>
+    </a>
+  </header>
+
+  <h1 class="page-title">How to Play</h1>
+  <p class="page-intro">The 1% Match is a World Cup football trivia game built around one idea: progressive elimination. You start alongside 100 virtual contestants and try to be the last one standing.</p>
+
+  <div class="section">
+    <h2>The Concept</h2>
+    <p>100 virtual contestants enter the game. There are 12 questions, each harder than the last. After every question, a chunk of contestants are eliminated based on the difficulty tier. By the final question, only 1% remain. Your goal is to answer all 12 correctly and be among them.</p>
+  </div>
+
+  <div class="section">
+    <h2>Question Tiers</h2>
+    <p>Each question has a pass rate that determines how many contestants survive it. The further you go, the fewer make it through.</p>
+    <table class="tier-table">
+      <tr><th>Question</th><th>Pass Rate</th><th>Survivors</th></tr>
+      <tr><td>Q1</td><td>90%</td><td>90 of 100</td></tr>
+      <tr><td>Q2</td><td>85%</td><td>~77</td></tr>
+      <tr><td>Q3</td><td>80%</td><td>~61</td></tr>
+      <tr><td>Q4</td><td>70%</td><td>~43</td></tr>
+      <tr><td>Q5</td><td>60%</td><td>~26</td></tr>
+      <tr><td>Q6</td><td>50%</td><td>~13</td></tr>
+      <tr><td>Q7</td><td>40%</td><td>~5</td></tr>
+      <tr><td>Q8</td><td>30%</td><td>~2</td></tr>
+      <tr><td>Q9</td><td>20%</td><td>~1</td></tr>
+      <tr><td>Q10</td><td>15%</td><td>~1</td></tr>
+      <tr><td>Q11</td><td>5%</td><td>~1</td></tr>
+      <tr><td>Q12</td><td>1%</td><td>~1</td></tr>
+    </table>
+    <p>If you get a question wrong, you're out -- just like the virtual contestants who didn't make the cut.</p>
+  </div>
+
+  <div class="section">
+    <h2>The Timer</h2>
+    <p>You have <span class="highlight">15 seconds</span> to answer each question. The timer bar at the top of the screen shows how much time you have left. It turns yellow when you're running low, and red in the final seconds. If the timer runs out, it counts as a wrong answer.</p>
+  </div>
+
+  <div class="section">
+    <h2>The Pass</h2>
+    <p>From <span class="highlight">Question 5 onwards</span>, a Pass button appears. Using it lets you skip a question you're unsure about -- but it costs you your <span class="highlight">&pound;1,000 stake</span>. You keep your place in the game, but your potential prize drops. You only get one Pass per game, so use it wisely.</p>
+  </div>
+
+  <div class="section">
+    <h2>The Final Decision</h2>
+    <p>If you make it to Question 12, you face a choice before answering:</p>
+    <ul>
+      <li><span class="highlight">Play for the pot</span> -- answer Q12 and, if you get it right, win the full prize pool.</li>
+      <li><span class="highlight">Take &pound;10,000</span> -- walk away with a guaranteed &pound;10,000 without risking Q12.</li>
+    </ul>
+    <p>If multiple finalists answer Q12 correctly, the pot is split equally between them.</p>
+  </div>
+
+  <div class="section">
+    <h2>Game Modes</h2>
+    <ul>
+      <li><span class="highlight">Daily Challenge</span> -- a new set of 12 questions every day. Same questions for everyone, so you can compare with friends.</li>
+      <li><span class="highlight">Previous Days</span> -- missed a day? Go back and play any past daily challenge.</li>
+      <li><span class="highlight">Unlimited</span> -- play as many games as you like with randomised questions. Great for practice.</li>
+      <li><span class="highlight">Multiplayer</span> -- create a room and play the same questions at the same time with friends. See who survives the longest.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Streaks &amp; Stats</h2>
+    <p>The game tracks your stats locally in the browser -- no account needed. You can see your current streak, best streak, total games played, and how often you make it to different stages. Come back every day to keep your streak alive.</p>
+  </div>
+
+  <footer class="site-footer">
+    <a href="/how-to-play.html">How to Play</a>
+    <a href="/about.html">About</a>
+    <a href="/privacy.html">Privacy Policy</a>
+  </footer>
+
+</div>
+</body>
+</html>

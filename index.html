@@ -2,13 +2,35 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 <title>The 1% Match — World Cup Football Trivia</title>
-<meta name="description" content="12 World Cup trivia questions, each harder than the last. Can you survive the elimination and make it to the 1% question? Play daily, challenge friends, track your stats.">
+<meta name="description" content="12 World Cup trivia questions, each harder than the last. 100 contestants enter, only 1% survive. Play the daily challenge, compete with friends, and track your stats. Free, no sign-up needed.">
+<link rel="canonical" href="https://onepercentmatch.com/">
+
+<!-- Open Graph -->
 <meta property="og:title" content="The 1% Match — World Cup Football Trivia">
 <meta property="og:description" content="12 questions. 100 contestants. Only the top 1% survive. How far can you get?">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://onepercentmatch.com/">
+<meta property="og:image" content="https://onepercentmatch.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="The 1% Match">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The 1% Match — World Cup Football Trivia">
+<meta name="twitter:description" content="12 questions. 100 contestants. Only the top 1% survive. How far can you get?">
+<meta name="twitter:image" content="https://onepercentmatch.com/og.png">
+
+<!-- PWA -->
 <meta name="theme-color" content="#0a0a1a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="1% Match">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/icon-192.png">
+
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
@@ -940,6 +962,23 @@
   .mp-join-input::placeholder { color: #444; font-size: 16px; letter-spacing: 2px; font-weight: 400; }
 
   /* Responsive */
+  /* ── FOOTER ── */
+  .site-footer {
+    margin-top: 40px;
+    padding: 20px 0;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .site-footer a {
+    color: #555;
+    font-size: 13px;
+    text-decoration: none;
+    transition: color .2s;
+  }
+  .site-footer a:hover { color: #8888aa; }
+
   @media (max-width: 500px) {
     .logo { font-size: 52px; }
     .logo-sub { font-size: 20px; letter-spacing: 4px; }
@@ -1014,6 +1053,11 @@
       <div class="mode-desc">View your performance history</div>
     </div>
   </div>
+  <footer class="site-footer">
+    <a href="/how-to-play.html">How to Play</a>
+    <a href="/about.html">About</a>
+    <a href="/privacy.html">Privacy Policy</a>
+  </footer>
 </div>
 
 <!-- ════════ MULTIPLAYER SCREEN ════════ -->
@@ -1175,6 +1219,7 @@
 // ── QUESTION BANK — WORLD CUP ONLY ────────────────────────────
 const QUESTION_BANK = {
   90: [
+    // Original questions
     { q: "How many teams compete in a FIFA World Cup finals tournament (as of 2022)?", options: ["24","32","48","64"], answer: 1 },
     { q: "What colour is the FIFA World Cup trophy?", options: ["Silver","Gold","Bronze","Platinum"], answer: 1 },
     { q: "How often is the FIFA World Cup held?", options: ["Every year","Every 2 years","Every 4 years","Every 6 years"], answer: 2 },
@@ -1182,12 +1227,39 @@ const QUESTION_BANK = {
     { q: "How many players from each team are on the pitch at kick-off in a World Cup match?", options: ["9","10","11","12"], answer: 2 },
     { q: "Who won the 2022 FIFA World Cup?", options: ["France","Brazil","Argentina","Croatia"], answer: 2 },
     { q: "What is the standard length of a World Cup match (without extra time)?", options: ["60 minutes","80 minutes","90 minutes","120 minutes"], answer: 2 },
-    { q: "Which continent has produced the most World Cup winners?", options: ["Europe","South America","Africa","Asia"], answer: 1 },
+    { q: "Which continent has produced the most World Cup winners?", options: ["Europe","South America","Africa","Asia"], answer: 0 },
     { q: "What colour shirts does Brazil traditionally wear at the World Cup?", options: ["Blue","White","Yellow","Green"], answer: 2 },
     { q: "The World Cup final is the last match of the tournament. True or false?", options: ["True","False","Only in some years","It depends on the format"], answer: 0 },
     { q: "What sport is the FIFA World Cup?", options: ["Rugby","Cricket","Football (Soccer)","Basketball"], answer: 2 },
+    // New questions
+    { q: "Which organization runs the FIFA World Cup?", options: ["FIFA","UEFA","IOC","CONCACAF"], answer: 0 },
+    { q: "What shape is a football pitch?", options: ["Rectangle","Square","Circle","Oval"], answer: 0 },
+    { q: "What do players kick the ball into to score a goal?", options: ["The goal","The corner flag","The penalty spot","The centre circle"], answer: 0 },
+    { q: "Which continent does Brazil belong to?", options: ["South America","North America","Europe","Africa"], answer: 0 },
+    { q: "Does the World Cup have a group stage?", options: ["Yes","No","Only since 2018","Only in even years"], answer: 0 },
+    { q: "What does the winning team receive at the World Cup?", options: ["A trophy","A medal only","A golden ball","A certificate"], answer: 0 },
+    { q: "Which country hosted the 2006 World Cup?", options: ["Germany","France","Italy","Spain"], answer: 0 },
+    { q: "Which country won the 2018 World Cup?", options: ["France","Croatia","Belgium","England"], answer: 0 },
+    { q: "Which team wears blue shirts and is known as the Azzurri?", options: ["Italy","France","Greece","Portugal"], answer: 0 },
+    { q: "Which country does Cristiano Ronaldo represent?", options: ["Portugal","Spain","Brazil","Argentina"], answer: 0 },
+    { q: "Which country hosted the 2014 World Cup?", options: ["Brazil","Argentina","Colombia","Chile"], answer: 0 },
+    { q: "Is the World Cup played indoors or outdoors?", options: ["Outdoors","Indoors","Either","Depends on the weather"], answer: 0 },
+    { q: "Which country hosted the 1998 World Cup?", options: ["France","Germany","England","Spain"], answer: 0 },
+    { q: "What colour are Germany's traditional home shirts?", options: ["White","Black","Red","Blue"], answer: 0 },
+    { q: "In football, what is a hat-trick?", options: ["Three goals by one player in one match","Three red cards in one match","Three saves by a goalkeeper","Three corners in a row"], answer: 0 },
+    { q: "What happens if the score is level after 90 minutes in a World Cup knockout match?", options: ["Extra time is played","The match is replayed","The team with more shots wins","A coin toss decides"], answer: 0 },
+    { q: "How many times has Germany won the World Cup?", options: ["4","3","5","2"], answer: 0 },
+    { q: "Which famous Brazilian is often called the greatest of all time and won three World Cups?", options: ["Pelé","Ronaldo","Ronaldinho","Zico"], answer: 0 },
+    { q: "What is the maximum number of substitutes a team can make in a 2022 World Cup match?", options: ["5","3","4","6"], answer: 0 },
+    { q: "Which two teams played in the 2022 World Cup final?", options: ["Argentina vs France","Brazil vs France","Germany vs Argentina","France vs Croatia"], answer: 0 },
+    { q: "A player who stops the ball with their hand deliberately will usually receive what?", options: ["A free kick or penalty against them","A goal kick","Nothing","A throw-in"], answer: 0 },
+    { q: "Which country's national team is nicknamed 'La Roja' (The Red)?", options: ["Spain","Portugal","Chile","Belgium"], answer: 0 },
+    { q: "What colour card does a referee show to send a player off the pitch?", options: ["Red","Yellow","Green","Blue"], answer: 0 },
+    { q: "In which year was the most recent World Cup held (as of 2022)?", options: ["2022","2020","2021","2023"], answer: 0 },
+    { q: "How many halves are there in a standard World Cup match?", options: ["2","3","4","1"], answer: 0 },
   ],
   80: [
+    // Original questions
     { q: "Which country has won the most FIFA World Cups?", options: ["Germany","Argentina","Italy","Brazil"], answer: 3 },
     { q: "How many times has Brazil won the World Cup?", options: ["3","4","5","6"], answer: 2 },
     { q: "In which country was the 2018 World Cup held?", options: ["Brazil","South Africa","Russia","Japan"], answer: 2 },
@@ -1198,20 +1270,63 @@ const QUESTION_BANK = {
     { q: "Which European country has won the World Cup four times?", options: ["France","Spain","Italy","Germany"], answer: 3 },
     { q: "The World Cup was not held during which years due to World War II?", options: ["1938 & 1942","1942 & 1946","1940 & 1944","1936 & 1940"], answer: 1 },
     { q: "Which country hosted the first World Cup held in Africa?", options: ["Nigeria","Egypt","South Africa","Morocco"], answer: 2 },
+    // New questions
+    { q: "Which country hosted the first ever World Cup in 1930?", options: ["Uruguay","Argentina","Brazil","Italy"], answer: 0 },
+    { q: "Which player won the Golden Ball (best player) at the 2022 World Cup?", options: ["Lionel Messi","Kylian Mbappe","Emiliano Martinez","Luka Modric"], answer: 0 },
+    { q: "England's only World Cup win came in which year?", options: ["1966","1970","1962","1958"], answer: 0 },
+    { q: "What trophy did winners receive from 1930 to 1970 before Brazil kept it permanently?", options: ["The Jules Rimet Trophy","The FIFA Cup","The World Cup Trophy","The Coupe du Monde"], answer: 0 },
+    { q: "France beat Croatia in the 2018 World Cup final. What was the score?", options: ["4-2","3-1","2-1","3-2"], answer: 0 },
+    { q: "Italy won their fourth World Cup in which year?", options: ["2006","2002","1998","1994"], answer: 0 },
+    { q: "What was the score in the 1970 World Cup final when Brazil beat Italy?", options: ["4-1","3-1","3-2","2-1"], answer: 0 },
+    { q: "Which South American nation hosted the 1978 World Cup?", options: ["Argentina","Uruguay","Chile","Peru"], answer: 0 },
+    { q: "Ronaldo of Brazil scored how many goals at the 2002 World Cup to win the Golden Boot?", options: ["8","7","6","10"], answer: 0 },
+    { q: "Who became the oldest player to appear at a World Cup, aged 45, at Russia 2018?", options: ["Essam El-Hadary","Roger Milla","Dino Zoff","Antonio Carbajal"], answer: 0 },
+    { q: "Which nation won back-to-back World Cups in 1934 and 1938?", options: ["Italy","Germany","Brazil","Argentina"], answer: 0 },
+    { q: "The 1994 World Cup final between Brazil and Italy was decided how?", options: ["Penalty shootout","Extra time golden goal","A replay","Sudden death"], answer: 0 },
+    { q: "How many nations have ever won the FIFA World Cup?", options: ["8","7","6","10"], answer: 0 },
+    { q: "Which player captained France to the 2018 World Cup title?", options: ["Hugo Lloris","Antoine Griezmann","Paul Pogba","Kylian Mbappe"], answer: 0 },
+    { q: "What year did Spain win their first and only World Cup?", options: ["2010","2006","2014","2002"], answer: 0 },
+    { q: "Brazil beat Sweden 5-2 in which World Cup final?", options: ["1958","1962","1966","1954"], answer: 0 },
+    { q: "The fastest goal in World Cup history — 11 seconds — was scored by which player?", options: ["Hakan Sukur","Miroslav Klose","Ronaldo","Filippo Inzaghi"], answer: 0 },
+    { q: "Which player won the Golden Boot at the 2014 World Cup with 6 goals?", options: ["James Rodriguez","Thomas Muller","Lionel Messi","Neymar"], answer: 0 },
+    { q: "Who was the first player to score in five different World Cup tournaments?", options: ["Cristiano Ronaldo","Lionel Messi","Miroslav Klose","Pele"], answer: 0 },
+    { q: "Which country has appeared in the most World Cup final matches?", options: ["Germany","Brazil","Italy","Argentina"], answer: 0 },
+    { q: "Roger Milla of Cameroon scored at the 1994 World Cup at what remarkable age?", options: ["42","40","38","44"], answer: 0 },
   ],
   70: [
-    { q: "Who captained Argentina to World Cup victory in 2022?", options: ["Angel Di Maria","Paulo Dybala","Lionel Messi","Lautaro Martinez"], answer: 2 },
-    { q: "Which country hosted the 2014 World Cup?", options: ["South Africa","Russia","Brazil","Germany"], answer: 2 },
-    { q: "Who headbutted Marco Materazzi in the 2006 World Cup final?", options: ["Thierry Henry","Patrick Vieira","Zinedine Zidane","David Trezeguet"], answer: 2 },
-    { q: "Germany famously beat Brazil 7-1 in the 2014 World Cup. What round was it?", options: ["Quarter-final","Semi-final","Final","Group stage"], answer: 1 },
-    { q: "Which country won the 2010 World Cup in South Africa?", options: ["Netherlands","Germany","Spain","Brazil"], answer: 2 },
-    { q: "What is the name of the official World Cup match ball used in 2022?", options: ["Jabulani","Brazuca","Telstar","Al Rihla"], answer: 3 },
-    { q: "England have won the World Cup once. In which year?", options: ["1962","1966","1970","1974"], answer: 1 },
-    { q: "Which player has scored the most goals in World Cup history?", options: ["Ronaldo Nazario","Miroslav Klose","Pele","Gerd Muller"], answer: 1 },
-    { q: "How many World Cups did Lionel Messi play in?", options: ["3","4","5","6"], answer: 2 },
-    { q: "Which country has appeared in the most World Cup finals (the final match)?", options: ["Brazil","Germany","Italy","Argentina"], answer: 1 },
+    // Original questions
+    { q: "Who captained Argentina to World Cup victory in 2022?", options: ["Angel Di Maria","Paulo Dybala","Lionel Messi","Lautaro Martinez"], answer: 2, sub: "Messi finally lifted the trophy at his fifth World Cup" },
+    { q: "Which country hosted the 2014 World Cup?", options: ["South Africa","Russia","Brazil","Germany"], answer: 2, sub: "Brazil hosted for the second time, having first hosted in 1950" },
+    { q: "Who headbutted Marco Materazzi in the 2006 World Cup final?", options: ["Thierry Henry","Patrick Vieira","Zinedine Zidane","David Trezeguet"], answer: 2, sub: "Zidane was sent off in the final match of his career" },
+    { q: "Germany famously beat Brazil 7-1 in the 2014 World Cup. What round was it?", options: ["Quarter-final","Semi-final","Final","Group stage"], answer: 1, sub: "Five of Germany's goals came in a devastating 18-minute first-half spell" },
+    { q: "Which country won the 2010 World Cup in South Africa?", options: ["Netherlands","Germany","Spain","Brazil"], answer: 2, sub: "Spain won their first ever World Cup" },
+    { q: "What is the name of the official World Cup match ball used in 2022?", options: ["Jabulani","Brazuca","Telstar","Al Rihla"], answer: 3, sub: "Al Rihla means 'The Journey' in Arabic" },
+    { q: "England have won the World Cup once. In which year?", options: ["1962","1966","1970","1974"], answer: 1, sub: "England beat West Germany 4-2 at Wembley" },
+    { q: "Which player has scored the most goals in World Cup history?", options: ["Ronaldo Nazario","Miroslav Klose","Pele","Gerd Muller"], answer: 1, sub: "Klose scored 16 goals across four World Cups (2002-2014)" },
+    { q: "How many World Cups did Lionel Messi play in?", options: ["3","4","5","6"], answer: 2, sub: "Messi played in 2006, 2010, 2014, 2018, and 2022" },
+    { q: "Which country has appeared in the most World Cup finals (the final match)?", options: ["Brazil","Germany","Italy","Argentina"], answer: 1, sub: "Germany has appeared in 8 World Cup finals" },
+    // New questions
+    { q: "Which German midfielder scored the winning goal in the 2014 World Cup final against Argentina?", options: ["Mario Gotze","Thomas Muller","Mesut Ozil","Bastian Schweinsteiger"], answer: 0, sub: "Gotze scored in extra time to give Germany a 1-0 win at the Maracana" },
+    { q: "Which player won the Golden Ball at the 2018 World Cup?", options: ["Luka Modric","Kylian Mbappe","Antoine Griezmann","Eden Hazard"], answer: 0, sub: "Modric guided Croatia to the final for the first time, winning the tournament's best player award" },
+    { q: "Morocco became the first African nation to reach a World Cup semi-final in which year?", options: ["2022","2018","2010","2002"], answer: 0, sub: "Morocco defeated Portugal in the quarter-finals of Qatar 2022 before losing to France in the semis" },
+    { q: "Which goalkeeper went a record 517 consecutive minutes without conceding at a single World Cup?", options: ["Walter Zenga","Peter Shilton","Gianluigi Buffon","Fabien Barthez"], answer: 0, sub: "Italy's Zenga went 517 minutes without conceding at the 1990 World Cup until Argentina's Caniggia broke the streak" },
+    { q: "Who scored twice in the 2002 World Cup final as Brazil beat Germany 2-0?", options: ["Ronaldo","Rivaldo","Ronaldinho","Roberto Carlos"], answer: 0, sub: "Ronaldo scored in the 67th and 79th minutes to give Brazil their fifth World Cup title" },
+    { q: "Which player received the fastest red card in World Cup history — after just 56 seconds?", options: ["Jose Batista","Zinedine Zidane","Marco Materazzi","Rigobert Song"], answer: 0, sub: "Uruguay's Jose Batista was sent off 56 seconds into the match against Scotland at the 1986 World Cup" },
+    { q: "Who was the only coach to win two World Cups as manager?", options: ["Vittorio Pozzo","Didier Deschamps","Helmut Schon","Mario Zagallo"], answer: 0, sub: "Italy's Pozzo won back-to-back World Cups in 1934 and 1938 — the only coach ever to achieve this" },
+    { q: "Which player holds the record for most World Cup matches played with 26?", options: ["Lionel Messi","Miroslav Klose","Lothar Matthaus","Cristiano Ronaldo"], answer: 0, sub: "Messi played 26 World Cup matches across five tournaments (2006-2022)" },
+    { q: "Which city hosted the 2014 semi-final where Germany beat Brazil 7-1?", options: ["Belo Horizonte","Rio de Janeiro","Sao Paulo","Brasilia"], answer: 0, sub: "The match at the Estadio Mineirao in Belo Horizonte became known as the 'Mineirazo'" },
+    { q: "France won the 1998 World Cup on home soil. Who scored two headers in the final against Brazil?", options: ["Zinedine Zidane","Thierry Henry","Didier Deschamps","Emmanuel Petit"], answer: 0, sub: "Zidane scored twice from corners in the first half, with Petit adding a third late for a 3-0 win" },
+    { q: "Who scored five goals in a single World Cup match — a record — for Russia against Cameroon in 1994?", options: ["Oleg Salenko","Sergei Yuran","Igor Kolyvanov","Valeri Karpin"], answer: 0, sub: "Salenko's five goals in Russia's 6-1 win remains the most by one player in a single World Cup match" },
+    { q: "Who won the Golden Glove (best goalkeeper) award at the 2022 World Cup?", options: ["Emiliano Martinez","Hugo Lloris","Dominik Livakovic","Yassine Bounou"], answer: 0, sub: "Martinez was decisive for Argentina, saving crucial penalties in the semi-final and final" },
+    { q: "Who scored the first ever World Cup goal, for France against Mexico on 13 July 1930?", options: ["Lucien Laurent","Just Fontaine","Raymond Kopa","Michel Platini"], answer: 0, sub: "Laurent's volley opened the scoring in France's 4-1 win — the first goal in World Cup history" },
+    { q: "Brazil is the only nation to have played at every single World Cup. How many tournaments through 2022?", options: ["22","21","20","23"], answer: 0, sub: "Brazil has qualified for and competed at all 22 World Cups from 1930 to 2022" },
+    { q: "At the 1950 World Cup, Brazil lost the deciding match to Uruguay in what became known as what?", options: ["The Maracanazo","The Mineirazo","The Miracle of Bern","The Battle of Santiago"], answer: 0, sub: "Uruguay's shock 2-1 win at the Maracana caused a national day of mourning in Brazil" },
+    { q: "Which player won three World Cup winners' medals — in 1958, 1962, and 1970?", options: ["Pele","Garrincha","Cafu","Ronaldo"], answer: 0, sub: "Pele is the only player to win three World Cup gold medals, though injury limited his contribution in 1962" },
+    { q: "Diego Forlan of Uruguay won the Golden Ball at which World Cup?", options: ["2010","2006","2014","2002"], answer: 0, sub: "Forlan was named best player at South Africa 2010 despite Uruguay finishing 4th, scoring 5 goals" },
+    { q: "Norman Whiteside of Northern Ireland became the youngest player to appear at a World Cup in 1982. How old was he?", options: ["17 years and 41 days","16 years and 200 days","17 years and 249 days","18 years and 30 days"], answer: 0, sub: "Whiteside broke Pele's record when he played against Yugoslavia on 17 June 1982" },
   ],
   60: [
+    // Original questions
     { q: "Who scored the winning goal in the 2010 World Cup final?", options: ["David Villa","Xavi","Andres Iniesta","Carles Puyol"], answer: 2, sub: "Iniesta scored in extra time against the Netherlands" },
     { q: "In the 1986 World Cup, who scored the 'Hand of God' goal?", options: ["Pele","Ronaldinho","Diego Maradona","Lionel Messi"], answer: 2, sub: "Argentina vs England, 1986 World Cup quarter-final" },
     { q: "Which country hosted the first ever FIFA World Cup in 1930?", options: ["Brazil","Italy","France","Uruguay"], answer: 3, sub: "Uruguay also won that first tournament" },
@@ -1222,8 +1337,30 @@ const QUESTION_BANK = {
     { q: "Which was the first Asian country to reach a World Cup semi-final?", options: ["Japan","Iran","South Korea","Saudi Arabia"], answer: 2, sub: "South Korea in 2002 on home soil" },
     { q: "What was controversial about Geoff Hurst's second goal in the 1966 final?", options: ["He was offside","The ball may not have crossed the line","He handled it","The whistle had blown"], answer: 1, sub: "The shot hit the crossbar and bounced down — still debated today" },
     { q: "Which country won the World Cup in 2006?", options: ["France","Germany","Brazil","Italy"], answer: 3, sub: "Italy beat France on penalties in Berlin" },
+    // New questions
+    { q: "Who scored the winning goal for Argentina in the 1978 World Cup final against the Netherlands?", options: ["Mario Kempes","Daniel Bertoni","Leopoldo Luque","Osvaldo Ardiles"], answer: 0, sub: "Kempes scored twice in extra time in Argentina's 3-1 victory on home soil in Buenos Aires" },
+    { q: "Which Italian striker won both the Golden Boot and Golden Ball at the 1982 World Cup?", options: ["Paolo Rossi","Alessandro Altobelli","Bruno Conti","Francesco Graziani"], answer: 0, sub: "Rossi scored 6 goals including a hat-trick vs Brazil and goals in the semi-final and final" },
+    { q: "Josip Simunic famously received three yellow cards in one match at the 2006 World Cup. Which referee made this error?", options: ["Graham Poll","Horacio Elizondo","Roberto Rosetti","Jorge Larrionda"], answer: 0, sub: "English referee Graham Poll issued Simunic yellows in the 61st, 90th, and 93rd minutes before finally sending him off" },
+    { q: "Who scored the goal that earned Senegal their famous upset over France at the 2002 World Cup?", options: ["Papa Bouba Diop","El-Hadji Diouf","Salif Diao","Henri Camara"], answer: 0, sub: "Diop's 30th-minute goal gave Senegal a 1-0 win over the defending champions in the 2002 opening game" },
+    { q: "Gerd Muller scored in both the 1970 semi-final and 1974 final. How many goals did he score across his World Cup career?", options: ["14","16","13","12"], answer: 0, sub: "Muller scored 14 goals in 13 World Cup matches — a record that stood until Klose surpassed it in 2014" },
+    { q: "Which player scored the winning penalty for Germany in the 1990 World Cup final against Argentina?", options: ["Andreas Brehme","Lothar Matthaus","Rudi Voller","Jurgen Klinsmann"], answer: 0, sub: "Brehme converted the 85th-minute penalty to win Germany their third World Cup title" },
+    { q: "Eusebio won the Golden Boot at the 1966 World Cup. For which country did he play?", options: ["Portugal","Mozambique","Angola","Cape Verde"], answer: 0, sub: "Born in Mozambique (then Portuguese territory), Eusebio scored 9 goals including four vs North Korea in the quarter-final" },
+    { q: "What was the final score when West Germany defeated Hungary in the 1954 World Cup final?", options: ["3-2","2-1","4-3","3-1"], answer: 0, sub: "The 'Miracle of Bern' — West Germany came from 2-0 down to beat Hungary 3-2 despite Hungary having beaten them 8-3 in the group stage" },
+    { q: "Which coach won the World Cup as both player (1958, 1962) and manager (1970) with Brazil?", options: ["Mario Zagallo","Carlos Alberto Parreira","Tele Santana","Luiz Felipe Scolari"], answer: 0, sub: "Zagallo is one of only three to win as both player and manager, alongside Beckenbauer and Deschamps" },
+    { q: "Sandor Kocsis scored 11 goals at the 1954 World Cup. Which country did he play for?", options: ["Hungary","Czechoslovakia","Yugoslavia","Austria"], answer: 0, sub: "Kocsis, nicknamed 'Golden Head', scored in every match for the 'Mighty Magyars' who finished runners-up" },
+    { q: "Tim Howard made a World Cup record 16 saves in a single match in 2014. Which country was the USA playing?", options: ["Belgium","Germany","Portugal","Ghana"], answer: 0, sub: "Howard's 16-save performance in the round of 16 couldn't prevent a 2-1 extra-time defeat" },
+    { q: "In the 1982 World Cup, Brazil were eliminated despite playing brilliant football. Who scored a hat-trick against them?", options: ["Paolo Rossi","Karl-Heinz Rummenigge","Zbigniew Boniek","Bruno Conti"], answer: 0, sub: "Italy's Rossi scored three times in a 3-2 win in the second group stage, ending one of the most celebrated teams never to win" },
+    { q: "Which player scored for the losing side in both the 1974 and 1978 World Cup finals?", options: ["Johan Neeskens","Johnny Rep","Rob Rensenbrink","Ruud Krol"], answer: 0, sub: "Neeskens scored for the Netherlands in both finals — a first-minute penalty in 1974 and a goal in 1978 — but lost both times" },
+    { q: "Lothar Matthaus played at five World Cups for Germany. In which year did he captain them to victory?", options: ["1990","1994","1986","1982"], answer: 0, sub: "Matthaus captained West Germany to the 1990 title in Italy" },
+    { q: "Which Brazilian player scored in every match of the 1970 World Cup — a unique record?", options: ["Jairzinho","Pele","Tostao","Rivellino"], answer: 0, sub: "Jairzinho scored in all six of Brazil's 1970 matches — a feat never achieved by any other player" },
+    { q: "France's 1998 World Cup final victory against Brazil was unexpected partly because of Ronaldo's medical episode beforehand. What was the final score?", options: ["3-0","2-0","2-1","4-0"], answer: 0, sub: "Zidane's two first-half headers and Petit's late third gave France an emphatic 3-0 win" },
+    { q: "Which player was awarded the Golden Ball at the 2006 World Cup despite being sent off in the final?", options: ["Zinedine Zidane","Andrea Pirlo","Gianluigi Buffon","Fabio Cannavaro"], answer: 0, sub: "Zidane won the Golden Ball even after his infamous headbutt on Materazzi in the final — the last match of his career" },
+    { q: "Who kept goal for England in their victorious 1966 World Cup campaign?", options: ["Gordon Banks","Peter Shilton","Ray Clemence","Peter Bonetti"], answer: 0, sub: "Banks, widely regarded as one of the greatest goalkeepers ever, conceded only 3 goals throughout the 1966 tournament" },
+    { q: "The 2010 World Cup final was settled by an extra-time goal from Iniesta. What was the score before he struck?", options: ["0-0","1-0 to Netherlands","1-0 to Spain","1-1"], answer: 0, sub: "The match was goalless before Iniesta struck in the 116th minute to give Spain a 1-0 win" },
+    { q: "Who scored the only goal of the 1990 World Cup final?", options: ["Andreas Brehme","Lothar Matthaus","Rudi Voller","Klaus Augenthaler"], answer: 0, sub: "Brehme's 85th-minute penalty gave West Germany a 1-0 win over Argentina — two Argentine players were sent off during the match" },
   ],
   50: [
+    // Original questions
     { q: "Who won the Golden Ball (best player) at the 2014 World Cup?", options: ["Thomas Muller","Lionel Messi","James Rodriguez","Neymar"], answer: 1, sub: "Messi won despite Argentina losing the final" },
     { q: "How many goals did Miroslav Klose score in World Cup history?", options: ["14","15","16","17"], answer: 2, sub: "16 goals across four World Cups (2002-2014)" },
     { q: "Which country hosted the 1994 World Cup?", options: ["Mexico","USA","Italy","France"], answer: 1, sub: "The first World Cup held in the United States" },
@@ -1234,8 +1371,28 @@ const QUESTION_BANK = {
     { q: "How many World Cups did Pele win as a player?", options: ["1","2","3","4"], answer: 2, sub: "1958, 1962, and 1970" },
     { q: "Who scored the most goals in a single World Cup tournament?", options: ["Gerd Muller (1970)","Just Fontaine (1958)","Ronaldo (2002)","Sandor Kocsis (1954)"], answer: 1, sub: "Fontaine scored 13 goals for France in 1958 — a record that still stands" },
     { q: "Which country won the first World Cup to use a penalty shootout in the final?", options: ["Argentina (1978)","Brazil (1994)","Italy (2006)","Argentina (2022)"], answer: 1, sub: "Brazil beat Italy on penalties in the 1994 final at the Rose Bowl" },
+    // New questions
+    { q: "Who scored the only hat-trick in a World Cup final before 2022?", options: ["Pele","Geoff Hurst","Gerd Muller","Eusebio"], answer: 1, sub: "Hurst scored three for England vs West Germany in the 1966 final — the only final hat-trick for 56 years until Mbappe in 2022" },
+    { q: "Which team scored the most goals in a single World Cup tournament?", options: ["Brazil in 1950","France in 1958","Hungary in 1954","Germany in 2014"], answer: 2, sub: "Hungary scored 27 goals in the 1954 tournament — a record for a single team at a single World Cup" },
+    { q: "Gerd Muller scored how many goals in the 1970 World Cup to win the Golden Boot?", options: ["8","9","10","12"], answer: 2, sub: "Muller scored 10 goals in the 1970 World Cup in Mexico" },
+    { q: "Who scored the fastest goal in a World Cup final?", options: ["Geoff Hurst","Johan Neeskens","Carlos Alberto","Ronaldo"], answer: 1, sub: "Neeskens scored a penalty after just 90 seconds for the Netherlands vs West Germany in the 1974 final — before a German player had even touched the ball" },
+    { q: "Eusebio scored 9 goals at which World Cup?", options: ["1958","1962","1966","1970"], answer: 2, sub: "Eusebio scored 9 goals for Portugal at the 1966 World Cup in England, winning the Golden Boot" },
+    { q: "In what year did France first win the World Cup?", options: ["1994","1996","1998","2000"], answer: 2, sub: "France won their first World Cup on home soil in 1998, beating Brazil 3-0 in the final" },
+    { q: "Who scored 8 goals at the 2022 World Cup to win the Golden Boot?", options: ["Lionel Messi","Kylian Mbappe","Olivier Giroud","Marcus Rashford"], answer: 1, sub: "Mbappe scored 8 goals including a hat-trick in the final to win the Golden Boot" },
+    { q: "How many goals did Ademir score to win the Golden Boot at the 1950 World Cup?", options: ["7","8","9","10"], answer: 2, sub: "Ademir (Brazil) scored 9 goals at the 1950 World Cup" },
+    { q: "Paolo Rossi won the Golden Boot at the 1982 World Cup with how many goals?", options: ["5","6","7","8"], answer: 1, sub: "Rossi scored 6 goals for Italy, winning both the Golden Boot and Golden Ball" },
+    { q: "Who scored the winning goal in the 1974 World Cup final for West Germany?", options: ["Gerd Muller","Paul Breitner","Franz Beckenbauer","Bernd Holzenbein"], answer: 0, sub: "Muller scored the winner, completing a comeback from 1-0 down to beat the Netherlands 2-1" },
+    { q: "Spain won their first World Cup in which year?", options: ["2006","2008","2010","2012"], answer: 2, sub: "Spain beat the Netherlands 1-0 in the final thanks to Iniesta's extra-time goal" },
+    { q: "Gary Lineker won the Golden Boot at the 1986 World Cup with how many goals?", options: ["5","6","7","8"], answer: 1, sub: "Lineker scored 6 goals for England at Mexico 1986" },
+    { q: "How many saves did Tim Howard make for the USA vs Belgium at the 2014 World Cup — a tournament record?", options: ["12","14","16","18"], answer: 2, sub: "Howard's 16 saves are the most in a single World Cup match, though the USA still lost 2-1 in extra time" },
+    { q: "Dino Zoff became the oldest captain to lift the World Cup trophy when Italy won in 1982. How old was he?", options: ["37","38","39","40"], answer: 3, sub: "Zoff was 40 years old when he lifted the World Cup — the oldest captain ever to do so" },
+    { q: "Which player won the Young Player Award at the 2014 World Cup?", options: ["James Rodriguez","Thomas Muller","Paul Pogba","Kylian Mbappe"], answer: 2, sub: "Pogba won the FIFA Young Player Award at the 2014 World Cup in Brazil" },
+    { q: "Who is the only goalkeeper to have won the World Cup Golden Ball (best player)?", options: ["Peter Shilton","Dino Zoff","Oliver Kahn","Gianluigi Buffon"], answer: 2, sub: "Germany's Kahn won the 2002 Golden Ball despite Germany losing the final to Brazil" },
+    { q: "Which country won the first ever World Cup in 1930?", options: ["Argentina","Brazil","Uruguay","Italy"], answer: 2, sub: "Uruguay hosted and won the inaugural 1930 World Cup, beating Argentina 4-2 in the final" },
+    { q: "Guillermo Stabile scored 8 goals at the 1930 World Cup. Which country did he play for?", options: ["Argentina","Uruguay","Brazil","Chile"], answer: 0, sub: "Stabile was the top scorer at the inaugural World Cup, scoring 8 goals in 4 matches for Argentina" },
   ],
   40: [
+    // Original questions
     { q: "Who scored the fastest goal in World Cup history?", options: ["Ronaldo","Hakan Sukur","Miroslav Klose","Rivaldo"], answer: 1, sub: "Sukur scored after 11 seconds for Turkey vs South Korea in 2002" },
     { q: "Which World Cup introduced the group stage format that lasted until 2022?", options: ["1950","1958","1982","1998"], answer: 3, sub: "The 32-team format with 8 groups of 4 began in France 1998" },
     { q: "Who was the oldest player to score in a World Cup match?", options: ["Roger Milla","Peter Shilton","Dino Zoff","Essam El-Hadary"], answer: 0, sub: "Cameroon's Milla scored at 42 years old in 1994" },
@@ -1246,8 +1403,28 @@ const QUESTION_BANK = {
     { q: "What was the 'Battle of Santiago'?", options: ["A violent 1962 WC match between Chile and Italy","A dispute over hosting rights","A stadium collapse","A referee strike"], answer: 0, sub: "The 1962 group match featured punches, kicks and two red cards" },
     { q: "Which country has qualified for the most World Cups without ever winning?", options: ["Netherlands","Mexico","Belgium","Switzerland"], answer: 1, sub: "Mexico has appeared in 17 World Cups without winning" },
     { q: "Who won the first ever Adidas Golden Shoe at a World Cup?", options: ["Eusebio (1966)","Gerd Muller (1970)","Mario Kempes (1978)","Paolo Rossi (1982)"], answer: 1, sub: "Muller's 10 goals in 1970 won the first official Golden Boot award" },
+    // New questions
+    { q: "Which player received THREE yellow cards in one 2006 World Cup match due to a referee error?", options: ["Zinedine Zidane","Josip Simunic","Roy Keane","Marco Materazzi"], answer: 1, sub: "Simunic (Croatia) received yellows at 61', 90', and 93' before referee Graham Poll finally showed red vs Australia" },
+    { q: "How many teams competed at the first World Cup in 1930?", options: ["12","13","16","20"], answer: 1, sub: "13 teams participated — four from Europe and nine from the Americas" },
+    { q: "Mario Kempes scored 6 goals to win the 1978 Golden Boot. Which country did he play for?", options: ["Brazil","Argentina","Peru","Uruguay"], answer: 1, sub: "Kempes scored 6 goals for host nation Argentina, including two in the final vs the Netherlands" },
+    { q: "Who was the first player to score in five different World Cup editions?", options: ["Miroslav Klose","Pele","Lionel Messi","Cristiano Ronaldo"], answer: 3, sub: "Ronaldo scored in 2006, 2010, 2014, 2018, and 2022 — the first player to score in five different World Cups" },
+    { q: "What was the result of the 1994 World Cup final between Brazil and Italy?", options: ["0-0 (3-2 on penalties)","1-0 after extra time","1-1 (5-3 on penalties)","2-0"], answer: 0, sub: "The 1994 final ended 0-0 — the only goalless World Cup final ever — with Brazil winning 3-2 on penalties" },
+    { q: "How many World Cup matches has Lionel Messi played — a record for any player?", options: ["21","23","25","26"], answer: 3, sub: "Messi played 26 World Cup matches across 2006-2022, more than any other player" },
+    { q: "Marcos Coll scored the only direct corner kick goal (olimpico) in World Cup history. When was this?", options: ["1950","1958","1962","1970"], answer: 2, sub: "Colombia's Coll scored directly from a corner vs the Soviet Union on 3 June 1962 — unique in World Cup history" },
+    { q: "Salvatore Schillaci won both the Golden Boot and Golden Ball at which World Cup?", options: ["1986","1988","1990","1994"], answer: 2, sub: "Schillaci scored 6 goals and was named best player at Italia '90, despite being relatively unknown beforehand" },
+    { q: "What is the record for most yellow cards in a single World Cup match?", options: ["12","14","16","18"], answer: 3, sub: "Netherlands vs Argentina in the 2022 quarter-final produced 18 yellow cards — a World Cup record" },
+    { q: "Who won the 1974 World Cup Golden Boot with 7 goals for Poland?", options: ["Andrzej Szarmach","Grzegorz Lato","Kazimierz Deyna","Robert Gadocha"], answer: 1, sub: "Lato scored 7 goals as Poland finished third at the 1974 World Cup in West Germany" },
+    { q: "Qatar (2022 hosts) became the first host nation to do what?", options: ["Lose all group stage matches","Concede 10 goals","Finish bottom of the entire tournament","Be eliminated by the lowest-ranked team"], answer: 0, sub: "Qatar became the first host nation eliminated in the group stage without winning a single match" },
+    { q: "What goals-per-game average did the 1954 World Cup produce — the highest in history?", options: ["4.67","5.06","5.38","5.91"], answer: 2, sub: "The 1954 World Cup averaged 5.38 goals per game across 26 matches — still the all-time record" },
+    { q: "Who stepped up to lead Brazil to the 1962 World Cup title after Pele was injured?", options: ["Vava","Zito","Garrincha","Didi"], answer: 2, sub: "Garrincha won the Golden Ball and guided Brazil to the title after Pele's injury in the group stage" },
+    { q: "Davor Suker won the 1998 Golden Boot with how many goals for Croatia?", options: ["5","6","7","8"], answer: 1, sub: "Suker scored 6 goals for Croatia at France '98 as they finished third in only their second World Cup" },
+    { q: "Both Zidane and which other player received two red cards across different World Cups?", options: ["Roy Keane","Patrick Vieira","Rigobert Song","Claudio Caniggia"], answer: 2, sub: "Rigobert Song (Cameroon, 1994 and 1998) and Zidane (1998 and 2006) both received two World Cup red cards — the joint record" },
+    { q: "Bert Patenaude (USA) is officially credited with the first hat-trick in World Cup history. Against whom?", options: ["France","Argentina","Paraguay","Chile"], answer: 2, sub: "Patenaude scored the first hat-trick vs Paraguay on 17 July 1930 — disputed for decades before FIFA confirmed it in 2006" },
+    { q: "Which World Cup holds the all-time record for highest total tournament attendance?", options: ["1986 Mexico","1990 Italy","1994 USA","1998 France"], answer: 2, sub: "The 1994 World Cup set the record at 3,587,538 across 52 matches — still unbeaten" },
+    { q: "Thomas Muller won the 2010 Golden Boot. What tiebreaker separated him from four other players on 5 goals?", options: ["Fewer minutes played","More assists","Goals in knockout rounds only","Better disciplinary record"], answer: 1, sub: "Muller won via assists tiebreaker with 3 assists vs 1 each for Villa, Sneijder, Forlan, and Gyan" },
   ],
   30: [
+    // Original questions
     { q: "Which country lost the most World Cup finals without ever winning the tournament?", options: ["Netherlands","Hungary","Czechoslovakia","Sweden"], answer: 0, sub: "The Netherlands lost finals in 1974, 1978, and 2010" },
     { q: "Who scored the 'Goal of the Century' at the 1986 World Cup?", options: ["Pele","Zinedine Zidane","Diego Maradona","Michel Platini"], answer: 2, sub: "Maradona dribbled past 5 England players — same match as the Hand of God" },
     { q: "Which World Cup saw the most total goals scored?", options: ["1954 Switzerland","1998 France","2014 Brazil","2022 Qatar"], answer: 0, sub: "The 1954 World Cup had 140 goals in 26 matches (5.38 per game)" },
@@ -1258,20 +1435,62 @@ const QUESTION_BANK = {
     { q: "What year was the World Cup trophy changed from the Jules Rimet to the current FIFA World Cup Trophy?", options: ["1966","1970","1974","1978"], answer: 2, sub: "Brazil kept the Jules Rimet trophy after their third win in 1970; the new trophy debuted in 1974" },
     { q: "Which team won the 'Group of Death' at the 2014 World Cup containing Spain, Netherlands, Chile, and Australia?", options: ["Spain","Netherlands","Chile","It was a tie"], answer: 1, sub: "Netherlands topped the group, famously thrashing Spain 5-1" },
     { q: "How many penalty shootouts have decided World Cup finals?", options: ["1","2","3","4"], answer: 2, sub: "1994 (Brazil), 2006 (Italy), 2022 (Argentina)" },
+    // New questions
+    { q: "Austria 7-5 Switzerland in 1954 produced the most goals in a single World Cup match. How many total goals?", options: ["10","11","12","13"], answer: 2, sub: "The 12 goals on 26 June 1954 remain the most in any single World Cup match in history" },
+    { q: "Which 2006 World Cup match had 28 red cards and 345 yellow cards across the tournament — both all-time records?", options: ["1990 Italy","1998 France","2002 Korea/Japan","2006 Germany"], answer: 3, sub: "The 2006 World Cup produced 28 red cards and 345 yellow cards in 64 matches — records that still stand" },
+    { q: "The 'Battle of Nuremberg' in 2006 saw how many red cards between Portugal and Netherlands?", options: ["2","3","4","5"], answer: 2, sub: "The round of 16 match produced 4 red cards (2 each) and 16 yellow cards — dubbed the 'Battle of Nuremberg'" },
+    { q: "How many headed goals did Miroslav Klose score in World Cup history — an all-time record?", options: ["5","6","7","8"], answer: 2, sub: "Klose scored 7 headed goals across his World Cup career from 2002 to 2014" },
+    { q: "Who scored Uruguay's winning goal in the 1950 'final' to defeat Brazil at the Maracana?", options: ["Juan Schiaffino","Alcides Ghiggia","Roberto Porta","Obdulio Varela"], answer: 1, sub: "Ghiggia scored in the 79th minute to give Uruguay a 2-1 win before roughly 200,000 stunned fans" },
+    { q: "Which nation became the first African and first Arab side to reach a World Cup semi-final?", options: ["Nigeria","Senegal","Ghana","Morocco"], answer: 3, sub: "Morocco reached the semi-finals at Qatar 2022, defeating Spain and Portugal en route" },
+    { q: "Essam El-Hadary became the oldest player ever to appear at a World Cup in 2018. How old was he?", options: ["43","44","45","46"], answer: 2, sub: "Egypt's El-Hadary appeared vs Saudi Arabia on 25 June 2018 aged 45 years and 161 days" },
+    { q: "Which player was sent off from the substitutes' bench at the 2002 World Cup?", options: ["David Beckham","Roy Keane","Claudio Caniggia","Patrick Vieira"], answer: 2, sub: "Caniggia (Argentina) was red-carded from the bench vs Sweden — the only such incident in World Cup history" },
+    { q: "What is the lowest recorded attendance at a World Cup match?", options: ["300","800","1,200","2,000"], answer: 0, sub: "Just 300 spectators attended Romania vs Peru at the Estadio Pocitos in Montevideo on 14 July 1930" },
+    { q: "Who is the only player to win two Golden Ball awards at World Cups?", options: ["Diego Maradona","Pele","Ronaldo","Lionel Messi"], answer: 3, sub: "Messi won the Golden Ball in 2014 (losing finalist) and 2022 (winner) — the only player to win it twice" },
+    { q: "The 1962 World Cup saw the only direct corner goal (olimpico) in tournament history. Who scored it?", options: ["Efrain Sanchez","Marcos Coll","Hector Rial","Adolfo Pedernera"], answer: 1, sub: "Colombia's Coll scored directly from a corner vs the Soviet Union on 3 June 1962" },
+    { q: "Grzegorz Lato won the 1974 Golden Boot for Poland with 7 goals. What place did Poland finish?", options: ["Second","Third","Fourth","Quarter-finals"], answer: 1, sub: "Poland finished third at the 1974 World Cup — their best ever finish" },
+    { q: "In the 1974 World Cup final, who scored West Germany's equaliser before Muller won it?", options: ["Franz Beckenbauer","Paul Breitner","Uli Hoeness","Bernd Holzenbein"], answer: 1, sub: "Breitner converted a penalty to make it 1-1 before Muller scored the winner in a 2-1 comeback" },
+    { q: "What is the record for most appearances by a coach at World Cup finals?", options: ["4","5","6","7"], answer: 2, sub: "Carlos Alberto Parreira coached at 6 World Cups (1982-2010) for 5 different nations" },
+    { q: "Which African nation was beaten 9-0 by Yugoslavia at the 1974 World Cup?", options: ["Nigeria","Cameroon","Ghana","Zaire"], answer: 3, sub: "Zaire (now DR Congo) lost 9-0 — one of the biggest margins of victory in World Cup history" },
+    { q: "What is the all-time record attendance for a single World Cup match?", options: ["150,000","163,500","173,850","195,000"], answer: 2, sub: "An estimated 173,850 spectators watched Uruguay vs Brazil at the Maracana on 16 July 1950" },
+    { q: "Kylian Mbappe scored how many goals across the 2018 and 2022 World Cup finals combined?", options: ["2","3","4","5"], answer: 2, sub: "Mbappe scored 1 goal in the 2018 final and 3 in 2022 for 4 total — more than any other player in World Cup finals" },
+    { q: "How many players were tied for top scorer at the 1962 World Cup with just 4 goals each?", options: ["4","5","6","7"], answer: 2, sub: "Six players shared the 1962 Golden Boot with 4 goals each — the only time so many shared the award" },
   ],
   20: [
+    // Original questions
     { q: "Who refereed the 1966 World Cup final?", options: ["Gottfried Dienst","Tofiq Bahramov","Ken Aston","Jack Taylor"], answer: 0, sub: "Swiss referee Dienst officiated; Bahramov was the linesman who awarded the controversial goal" },
     { q: "Which player has made the most World Cup final appearances?", options: ["Cafu","Pele","Kylian Mbappe","Franz Beckenbauer"], answer: 0, sub: "Cafu appeared in 3 finals: 1994, 1998, and 2002" },
     { q: "What was the score when North Korea sensationally beat Italy at the 1966 World Cup?", options: ["2-1","1-0","3-2","2-0"], answer: 1, sub: "Pak Doo-ik scored the only goal at Ayresome Park, Middlesbrough" },
     { q: "Who is the only goalkeeper to have won the World Cup Golden Ball (best player)?", options: ["Gianluigi Buffon","Oliver Kahn","Lev Yashin","Gordon Banks"], answer: 1, sub: "Germany's Kahn won the Golden Ball at the 2002 World Cup" },
-    { q: "In what minute did Sergio Aguero-style last-gasp goals decide the 1950 World Cup? When did Ghiggia score the winning goal vs Brazil?", options: ["11th minute","34th minute","65th minute","79th minute"], answer: 3, sub: "Alcides Ghiggia scored in the 79th minute to seal Uruguay's famous 2-1 win in the 'Maracanazo'" },
+    { q: "In what minute did Ghiggia score the winning goal vs Brazil in the 1950 'final'?", options: ["11th minute","34th minute","65th minute","79th minute"], answer: 3, sub: "Alcides Ghiggia scored in the 79th minute to seal Uruguay's famous 2-1 win in the 'Maracanazo'" },
     { q: "Which World Cup was the first to be broadcast on television?", options: ["1950 Brazil","1954 Switzerland","1958 Sweden","1962 Chile"], answer: 1, sub: "The 1954 World Cup in Switzerland was the first to be televised" },
     { q: "Who was the youngest player to score in a World Cup final?", options: ["Pele","Kylian Mbappe","Geoff Hurst","Zinedine Zidane"], answer: 0, sub: "Pele was 17 years 249 days old when he scored in the 1958 final vs Sweden" },
     { q: "How many red cards were shown in the 2006 World Cup — the most in a single tournament?", options: ["20","24","28","32"], answer: 2, sub: "28 red cards, including Zidane's in the final" },
     { q: "Which country has been eliminated in the World Cup quarter-finals the most times?", options: ["England","Brazil","Germany","Mexico"], answer: 0, sub: "England have been knocked out at the quarter-final stage 7 times" },
     { q: "What was unique about the 1958 World Cup in Sweden?", options: ["First with TV coverage worldwide","All British nations qualified","It was the first time all matches were played in one city","Brazil wore blue in the final"], answer: 3, sub: "Brazil's yellow clashed with Sweden's yellow, so Brazil wore blue shirts in the final" },
+    // New questions
+    { q: "Which referee officiated the 1970 World Cup final between Brazil and Italy?", options: ["Rudi Glockner","Jack Taylor","Tofiq Bahramov","Concetto Lo Bello"], answer: 0, sub: "East German referee Rudi Glockner officiated the 1970 final in Mexico City, which Brazil won 4-1" },
+    { q: "In what minute did Mario Gotze score the winning goal in the 2014 World Cup final?", options: ["113th","108th","116th","120th"], answer: 0, sub: "Gotze scored in the 113th minute of extra time to give Germany a 1-0 win over Argentina in Rio" },
+    { q: "Who was the referee for the 1994 World Cup final between Brazil and Italy?", options: ["Sandor Puhl","Joel Quiniou","Philip Don","Kurt Rothlisberger"], answer: 0, sub: "Hungarian referee Puhl officiated the first World Cup final decided by a penalty shootout" },
+    { q: "In what minute did Andres Iniesta score the winning goal in the 2010 World Cup final?", options: ["116th","113th","108th","120th"], answer: 0, sub: "Iniesta scored in the 116th minute of extra time to give Spain a 1-0 win over the Netherlands" },
+    { q: "How many yellow cards were shown in the 2010 World Cup final between Spain and the Netherlands?", options: ["14","9","11","7"], answer: 0, sub: "A record 14 yellow cards were shown by referee Howard Webb — 9 to the Dutch and 5 to Spain" },
+    { q: "Who scored the only goal in the 1990 World Cup final?", options: ["Andreas Brehme","Rudi Voller","Lothar Matthaus","Jurgen Klinsmann"], answer: 0, sub: "Brehme converted a penalty in the 85th minute — the first World Cup final decided solely by a penalty kick" },
+    { q: "Which World Cup was the first to be broadcast in colour television?", options: ["Mexico 1970","England 1966","West Germany 1974","Chile 1962"], answer: 0, sub: "The 1970 World Cup in Mexico was the first tournament broadcast in colour TV globally" },
+    { q: "Who captained France to World Cup glory in 1998?", options: ["Didier Deschamps","Laurent Blanc","Marcel Desailly","Emmanuel Petit"], answer: 0, sub: "Deschamps captained France in 1998 and later managed them to World Cup victory in 2018" },
+    { q: "In which minute did Dennis Bergkamp score his iconic quarter-final goal against Argentina at France '98?", options: ["90th","89th","87th","92nd"], answer: 0, sub: "Bergkamp's sublime first-touch-and-finish came in the 90th minute to send the Netherlands into the semi-finals" },
+    { q: "Which West German player missed a penalty in the 1982 World Cup semi-final shootout against France?", options: ["Uli Stielike","Karl-Heinz Rummenigge","Paul Breitner","Hans-Peter Briegel"], answer: 0, sub: "Stielike's missed penalty in the historic Seville shootout was followed by Didier Six also missing, before West Germany eventually won" },
+    { q: "In what minute did Geoff Hurst score his controversial second goal in the 1966 World Cup final?", options: ["101st","98th","103rd","95th"], answer: 0, sub: "Hurst's shot struck the underside of the bar in the 101st minute of extra time — given after consulting linesman Bahramov" },
+    { q: "Who was the top scorer at the 1978 World Cup in Argentina?", options: ["Mario Kempes","Rob Rensenbrink","Teofilo Cubillas","Leopoldo Luque"], answer: 0, sub: "Kempes scored 6 goals including two in the final, winning the Golden Boot" },
+    { q: "Which England player scored in the 2002 World Cup quarter-final against Brazil?", options: ["Michael Owen","David Beckham","Sol Campbell","Emile Heskey"], answer: 0, sub: "Owen scored in the 23rd minute before Rivaldo and Ronaldinho turned the match for Brazil in a 2-1 win" },
+    { q: "In which city was the 1978 World Cup final played?", options: ["Buenos Aires","Cordoba","Mendoza","Rosario"], answer: 0, sub: "The final was played at the Estadio Monumental in Buenos Aires" },
+    { q: "How many goals did Pele score at the 1958 World Cup?", options: ["6","5","7","4"], answer: 0, sub: "Pele scored 6 goals including two in the final vs Sweden, aged just 17" },
+    { q: "How many goals did Jurgen Klinsmann score at the 1994 World Cup?", options: ["5","3","7","4"], answer: 0, sub: "Klinsmann scored 5 goals at USA '94 despite Germany being eliminated in the quarter-finals" },
+    { q: "In what minute did Zidane score his first goal in the 1998 World Cup final?", options: ["27th","45th","32nd","18th"], answer: 0, sub: "Zidane headed in from a corner in the 27th minute to open the scoring against Brazil; he added a second just before half-time" },
+    { q: "Which player wore the number 10 shirt for Brazil at the 1994 World Cup?", options: ["Rai","Bebeto","Romario","Mazinho"], answer: 0, sub: "Rai wore number 10 at the 1994 World Cup, though Romario was the standout player" },
+    { q: "In which minute did Paolo Rossi score his third goal to complete his hat-trick against Brazil in 1982?", options: ["74th","69th","83rd","52nd"], answer: 0, sub: "Rossi completed his hat-trick in the 74th minute of Italy's stunning 3-2 second group stage win over Brazil" },
+    { q: "Gordon Banks kept how many clean sheets in England's 1966 World Cup campaign?", options: ["4","3","2","5"], answer: 0, sub: "Banks kept 4 clean sheets across England's 6 matches, conceding only 3 goals in total" },
   ],
   15: [
+    // Original questions
     { q: "Who is the youngest player to appear in a World Cup match?", options: ["Pele","Norman Whiteside","Femi Opabunmi","Samuel Eto'o"], answer: 1, sub: "Northern Ireland's Whiteside was 17 years 41 days old in 1982" },
     { q: "Which World Cup was the first to use penalty shootouts to decide knockout matches?", options: ["1974 West Germany","1978 Argentina","1982 Spain","1986 Mexico"], answer: 2, sub: "The first actual World Cup shootout was in 1982, West Germany vs France" },
     { q: "Who scored for both teams in a World Cup final?", options: ["Sergio Ramos","Mario Mandzukic","Gareth Bale","Cristiano Ronaldo"], answer: 1, sub: "Mandzukic scored an own goal AND a goal in the 2018 final vs France" },
@@ -1282,8 +1501,26 @@ const QUESTION_BANK = {
     { q: "Which player scored in every round of the 2002 World Cup from group stage to final?", options: ["Ronaldo","Rivaldo","Klose","Kahn"], answer: 0, sub: "Ronaldo scored 8 goals including 2 in the final" },
     { q: "How many goals were scored in the 2022 World Cup final between Argentina and France?", options: ["5","6","7","8"], answer: 1, sub: "3-3 after extra time (6 goals in the match), then Argentina won on penalties" },
     { q: "What was unique about the 1950 World Cup regarding the final?", options: ["It was decided by a round-robin group, not a final","It went to golden goal","It was played over two legs","Three teams tied"], answer: 0, sub: "Uruguay beat Brazil in the final group match — the 'Maracanazo'" },
+    // New questions
+    { q: "Who coached Italy to their 1982 World Cup victory?", options: ["Enzo Bearzot","Cesare Maldini","Arrigo Sacchi","Giovanni Trapattoni"], answer: 0, sub: "Bearzot guided Italy through despite heavy criticism of his squad selection, culminating in a 3-1 win over West Germany in the final" },
+    { q: "What was the format of the second round at the 1982 World Cup?", options: ["Four groups of three teams","Single-elimination knockout","Two groups of four teams","Round-robin then semi-finals"], answer: 0, sub: "The 1982 World Cup featured a unique second round of four groups of three, with group winners advancing to the semi-finals" },
+    { q: "Which player scored four goals for Portugal against North Korea in the 1966 quarter-final comeback from 3-0 down?", options: ["Eusebio","Jose Torres","Antonio Simoes","Mario Coluna"], answer: 0, sub: "Eusebio scored four goals as Portugal overturned a 3-0 deficit to win 5-3 — one of the greatest World Cup comebacks" },
+    { q: "In what year was the golden goal rule first used at a World Cup?", options: ["1998","2002","2006","1994"], answer: 0, sub: "Laurent Blanc scored the first ever golden goal at a World Cup in France's round of 16 win over Paraguay in 1998" },
+    { q: "Franz Beckenbauer won the World Cup as both player and manager. In which years?", options: ["1974 and 1990","1970 and 1986","1974 and 1986","1966 and 1990"], answer: 0, sub: "Beckenbauer captained West Germany to victory in 1974 and managed them to the title in 1990" },
+    { q: "What controversial rule change for the 1994 World Cup was designed to encourage attacking play?", options: ["Three points for a win","Golden goal in extra time","No back-pass to goalkeeper","Larger goals"], answer: 0, sub: "FIFA introduced three points for a win at the 1994 World Cup to discourage teams from settling for draws" },
+    { q: "What record did Ronaldo (Brazil) set at the 2006 World Cup?", options: ["Became all-time top scorer with 15 goals","First player to score in four World Cups","Scored the fastest hat-trick","Most assists in a tournament"], answer: 0, sub: "Ronaldo scored his 15th World Cup goal against Ghana, surpassing Gerd Muller's record of 14" },
+    { q: "How many nations competed in the very first World Cup in 1930?", options: ["13","16","12","14"], answer: 0, sub: "Only 13 nations participated: 7 from South America, 4 from Europe, and 2 from North/Central America" },
+    { q: "In which World Cup did the host nation first fail to advance past the group stage?", options: ["2010 South Africa","2006 Germany","2002 Japan","1966 England"], answer: 0, sub: "South Africa in 2010 became the first host nation eliminated in the group stage" },
+    { q: "What was the score at half-time in the 'Game of the Century' 1970 semi-final between Italy and West Germany?", options: ["1-0 to Italy","0-0","1-1","2-0 to Italy"], answer: 0, sub: "Italy led 1-0 through Boninsegna's goal; Schnellinger equalised in the 90th minute before Italy won 4-3 after extra time" },
+    { q: "Which World Cup saw the introduction of the current 32-team format?", options: ["1998","1994","2002","1990"], answer: 0, sub: "France 1998 was the first to feature 32 teams, expanded from the 24-team format used since 1982" },
+    { q: "Which nation originally won the right to host the 1986 World Cup before withdrawing?", options: ["Colombia","Chile","Argentina","Venezuela"], answer: 0, sub: "Colombia was awarded the 1986 World Cup but withdrew in 1983 due to financial difficulties; Mexico stepped in" },
+    { q: "Who scored the winning penalty for Brazil in the 1994 World Cup final shootout?", options: ["Branco","Mazinho","Mauro Silva","Aldair"], answer: 0, sub: "Branco scored the decisive fourth penalty after Roberto Baggio's famous miss ended the match" },
+    { q: "Which team did West Germany controversially defeat 1-0 to eliminate Algeria at the 1982 World Cup?", options: ["Austria","Chile","Algeria","Cameroon"], answer: 0, sub: "The exact result both teams needed — leading to the 'Disgrace of Gijon' as both teams appeared to stop competing" },
+    { q: "How many goals did hosts Uruguay score in total at the 1930 World Cup?", options: ["15","12","18","9"], answer: 0, sub: "Uruguay scored 15 goals in 4 matches, including 6-1 vs Yugoslavia in the semi-final and 4-2 in the final" },
+    { q: "Which player scored the winning goal in both the 1934 and 1938 World Cup finals for Italy?", options: ["Different scorers: Schiavio in 1934, Colaussi/Piola in 1938","Giuseppe Meazza","Silvio Piola","Raimundo Orsi"], answer: 0, sub: "Angelo Schiavio scored the winner in the 1934 final; Gino Colaussi and Silvio Piola both scored in the 1938 final" },
   ],
   10: [
+    // Original questions
     { q: "Who was the first substitute used in a World Cup match?", options: ["Anatoly Puzach","Bobby Charlton","Pele","Franz Beckenbauer"], answer: 0, sub: "Soviet Union's Puzach in 1970 — substitutions were first allowed that year" },
     { q: "How many players have scored hat-tricks in a World Cup final?", options: ["1","2","3","4"], answer: 1, sub: "Geoff Hurst (1966) and Kylian Mbappe (2022)" },
     { q: "Which country qualified for every single World Cup from 1930 to 2022?", options: ["Germany","Italy","Argentina","Brazil"], answer: 3, sub: "Brazil is the only country to have played in every World Cup" },
@@ -1294,8 +1531,28 @@ const QUESTION_BANK = {
     { q: "Which World Cup match is known as the 'Game of the Century'?", options: ["Brazil vs Uruguay 1950","Italy vs West Germany 1970","England vs Argentina 1986","France vs Brazil 1998"], answer: 1, sub: "Italy won 4-3 in extra time in the 1970 semi-final" },
     { q: "How many different stadiums were used in the 2022 Qatar World Cup?", options: ["6","7","8","10"], answer: 2, sub: "8 stadiums in and around Doha — the most compact World Cup ever" },
     { q: "Which player received the first-ever yellow card in World Cup history?", options: ["Evgeny Lovchev","Karl-Heinz Schnellinger","Anatoliy Byshovets","Bobby Moore"], answer: 0, sub: "Cards were introduced at the 1970 World Cup; Lovchev of the Soviet Union was first to be booked" },
+    // New questions
+    { q: "What is the name of the official match ball used at the 2006 World Cup?", options: ["Teamgeist","Fevernova","Jabulani","Roteiro"], answer: 0, sub: "The Teamgeist ('team spirit' in German) was the Adidas ball for Germany 2006, featuring only 14 panels instead of the traditional 32" },
+    { q: "Who is the only player to have scored in every match of a single World Cup tournament?", options: ["Jairzinho in 1970","Paolo Rossi in 1982","Eusebio in 1966","Gerd Muller in 1970"], answer: 0, sub: "Jairzinho scored in all six of Brazil's matches at the 1970 World Cup — the only player ever to achieve this" },
+    { q: "How many European nations made the journey to the 1930 World Cup?", options: ["4","6","3","7"], answer: 0, sub: "Only France, Belgium, Romania, and Yugoslavia made the long sea voyage to Uruguay" },
+    { q: "How many consecutive World Cups did Lothar Matthaus play in?", options: ["4","5","3","6"], answer: 1, sub: "Matthaus played in 5 consecutive World Cups: 1982, 1986, 1990, 1994, and 1998" },
+    { q: "Which nation was the first to win back-to-back World Cups?", options: ["Italy in 1934 and 1938","Brazil in 1958 and 1962","West Germany in 1954 and 1958","Uruguay in 1930 and 1950"], answer: 0, sub: "Italy won in 1934 and defended the title in France in 1938 — the first consecutive wins" },
+    { q: "Who scored the first hat-trick in World Cup history?", options: ["Bert Patenaude (USA) in 1930","Pedro Cea (Uruguay) in 1930","Guillermo Stabile (Argentina) in 1930","Lucien Laurent (France) in 1930"], answer: 0, sub: "Patenaude scored the first hat-trick vs Paraguay on 17 July 1930 — disputed for decades before FIFA confirmed it in 2006" },
+    { q: "What attendance record was set at the 1994 World Cup in the USA?", options: ["Highest cumulative attendance — nearly 3.6 million","Highest single-match attendance","Highest average per match","Most matches played"], answer: 0, sub: "The 1994 World Cup set the record at 3,587,538 across 52 matches — a record that still stands" },
+    { q: "What was the nickname of the 1998 World Cup official ball?", options: ["Tricolore","Questra","Tango","Europa"], answer: 0, sub: "The Tricolore — named for the French flag — was the first World Cup ball to feature multiple colours" },
+    { q: "In which city was the first ever World Cup match played?", options: ["Montevideo","Buenos Aires","Sao Paulo","Mexico City"], answer: 0, sub: "The first match was at the Pocitos stadium in Montevideo, Uruguay on 13 July 1930" },
+    { q: "How many times has the World Cup final gone to extra time?", options: ["8","6","5","10"], answer: 0, sub: "Eight finals have required extra time: 1934, 1966, 1978, 1994, 2006, 2010, 2014, and 2022" },
+    { q: "What was the official name of the 2002 World Cup match ball?", options: ["Fevernova","Questra","Tricolore","Tango Francia"], answer: 0, sub: "The Fevernova was the Adidas ball for the 2002 World Cup co-hosted by Japan and South Korea" },
+    { q: "How many stadiums were used at the 1966 World Cup in England?", options: ["8","6","10","7"], answer: 0, sub: "Eight stadiums: Wembley, Goodison Park, Old Trafford, Villa Park, Roker Park, Hillsborough, White City, and Ayresome Park" },
+    { q: "Which was the first World Cup to feature a third-place play-off match?", options: ["1934","1930","1938","1950"], answer: 0, sub: "The 1934 World Cup in Italy introduced the third-place play-off — Germany beat Austria 3-2" },
+    { q: "What was the official name of the 1990 World Cup ball?", options: ["Etrusco Unico","Azteca","Tango Espana","Ciao"], answer: 0, sub: "The Etrusco Unico featured Etruscan lion head designs — named after the ancient civilization native to the host nation Italy" },
+    { q: "Which South American nation has qualified for every World Cup except one (1938)?", options: ["Argentina","Uruguay","Chile","Paraguay"], answer: 0, sub: "Argentina has qualified for every World Cup except 1938" },
+    { q: "Which country hosted the World Cup twice — first in 1970, then in 1986?", options: ["Mexico","Italy","France","Germany"], answer: 0, sub: "Mexico was the first country to host the World Cup twice, stepping in for Colombia in 1986" },
+    { q: "How many own goals were recorded at the 1998 World Cup in France?", options: ["6","3","9","4"], answer: 0, sub: "Six own goals at France '98 — a notable figure later exceeded by the 12 own goals at Russia 2018" },
+    { q: "Miroslav Klose's record-breaking 16th World Cup goal came against which team at the 2014 World Cup?", options: ["Brazil","Ghana","Algeria","Portugal"], answer: 0, sub: "Klose scored against Brazil in the 7-1 semi-final to surpass Ronaldo's record of 15 goals" },
   ],
   5: [
+    // Original questions
     { q: "Has a 'golden goal' ever decided a World Cup final?", options: ["Yes, France 1998","Yes, Germany 2002","Yes, Italy 2006","No, never"], answer: 3, sub: "Golden goals decided other World Cup knockout matches but never a final" },
     { q: "In 1950, who scored the USA's shock 1-0 win over England at the World Cup?", options: ["Joe Gaetjens","Walter Bahr","Ed McIlvenny","Frank Borghi"], answer: 0, sub: "Haitian-born Gaetjens headed the winner in Belo Horizonte" },
     { q: "What was the first World Cup to feature a penalty shootout in the final?", options: ["1990 Italy","1994 USA","1998 France","2006 Germany"], answer: 1, sub: "Brazil beat Italy 3-2 on penalties after a 0-0 draw at the Rose Bowl" },
@@ -1306,8 +1563,26 @@ const QUESTION_BANK = {
     { q: "Which player holds the record for most minutes played in World Cup history?", options: ["Paolo Maldini","Lothar Matthaus","Miroslav Klose","Cafu"], answer: 1, sub: "Matthaus played 2,216 minutes across 5 World Cups (1982-1998)" },
     { q: "What was unique about the 1930 World Cup ball?", options: ["Each half used a different ball","It was made of rubber","It had no panels","It was white"], answer: 0, sub: "Argentina provided the ball for the first half, Uruguay for the second in the final" },
     { q: "Which country's national team went on strike and refused to play at the 1974 World Cup?", options: ["Zaire","Australia","Haiti","None — but Zaire's players threatened to"], answer: 3, sub: "Zaire's players threatened to refuse to play after being denied promised bonuses" },
+    // New questions
+    { q: "Which referee officiated the 1974 World Cup final between West Germany and the Netherlands?", options: ["Jack Taylor","Clive Thomas","Abraham Klein","Erich Linemayr"], answer: 0, sub: "English referee Taylor made history by awarding a penalty in the first two minutes before West Germany had touched the ball" },
+    { q: "In what year did FIFA officially confirm Bert Patenaude scored the first World Cup hat-trick?", options: ["2006","1994","1998","2010"], answer: 0, sub: "FIFA confirmed in 2006 — 76 years after the event — that Patenaude scored the first hat-trick at the 1930 World Cup" },
+    { q: "What was the name of the ball used at the 1986 World Cup in Mexico?", options: ["Azteca","Tango Espana","Tango Durlast","Questra"], answer: 0, sub: "The Adidas Azteca was the first synthetic World Cup ball — previous balls were leather. Named after the Aztec civilization" },
+    { q: "Who scored Argentina's winning goal in the 1986 World Cup final against West Germany?", options: ["Jorge Burruchaga","Diego Maradona","Jorge Valdano","Hector Enrique"], answer: 0, sub: "Burruchaga scored in the 83rd minute, converting a Maradona through-ball to give Argentina a 3-2 win" },
+    { q: "Which nation was originally awarded the 1986 World Cup before withdrawing?", options: ["Colombia","Mexico","Argentina","USA"], answer: 0, sub: "Colombia withdrew in 1983 due to financial difficulties; Mexico stepped in as replacement host" },
+    { q: "What was the exact result of the 1930 World Cup final between Uruguay and Argentina?", options: ["Uruguay 4-2 Argentina","Uruguay 3-1 Argentina","Uruguay 2-1 Argentina","Uruguay 3-2 Argentina"], answer: 0, sub: "Uruguay won 4-2, with Argentina leading 2-1 at half-time before Uruguay scored three in the second half" },
+    { q: "Who was FIFA President when the decision was made to hold the first World Cup in Uruguay?", options: ["Jules Rimet","Sepp Blatter","Joao Havelange","Robert Guerin"], answer: 0, sub: "Jules Rimet, FIFA President from 1921 to 1954, was the driving force behind creating the World Cup" },
+    { q: "The Jules Rimet Trophy was stolen in Brazil in 1983. What happened to it?", options: ["Believed melted down, never recovered","Found by a dog named Pickles","Recovered in a police raid","Returned anonymously"], answer: 0, sub: "Unlike the 1966 theft in England (where Pickles the dog found it), the 1983 Brazilian theft resulted in the trophy being melted down and never recovered" },
+    { q: "What was the original name of the World Cup trophy designed by Abel Lafleur?", options: ["Victory — depicting Nike the goddess","The World Championship Cup","The International Trophy","The Federation Cup"], answer: 0, sub: "The trophy depicted Nike holding an octagonal cup — called 'Victory' before becoming known as the Jules Rimet Trophy" },
+    { q: "How many nations submitted bids to host the inaugural 1930 World Cup?", options: ["5","4","6","3"], answer: 0, sub: "Five nations bid: Uruguay, Argentina, Italy, Netherlands, and Sweden — Uruguay was selected at the 1929 FIFA Congress in Barcelona" },
+    { q: "What was the name of the ball used at the 1974 World Cup?", options: ["Telstar Durlast","Chile 62","Tango Durlast","Azteca 74"], answer: 0, sub: "The Telstar Durlast continued the iconic black-and-white pentagon design first introduced at the 1970 World Cup" },
+    { q: "Djalma Santos played for Brazil in four consecutive World Cups. Which years?", options: ["1954, 1958, 1962, 1966","1950, 1954, 1958, 1962","1958, 1962, 1966, 1970","1962, 1966, 1970, 1974"], answer: 0, sub: "Djalma Santos played in the 1954, 1958, 1962, and 1966 World Cups, winning in 1958 and 1962" },
+    { q: "What was the official name of the 1982 World Cup ball?", options: ["Tango Espana","Telstar","Jabulani","Etrusco"], answer: 0, sub: "The Tango Espana was the last genuine leather ball used at a World Cup — all subsequent balls were synthetic" },
+    { q: "Which was the first World Cup match ever played at an indoor stadium?", options: ["USA vs Switzerland at the Pontiac Silverdome, 1994","Germany vs Bolivia at Giants Stadium, 1994","Argentina vs Greece at Foxboro Stadium, 1994","No indoor match has been played"], answer: 0, sub: "The USA vs Switzerland match at the Pontiac Silverdome on 18 June 1994 was the first World Cup match played indoors" },
+    { q: "What was the exact date of the first ever World Cup match?", options: ["13 July 1930","17 July 1930","30 July 1930","15 July 1930"], answer: 0, sub: "France beat Mexico 4-1 and the USA beat Belgium 3-0 on 13 July 1930 — the first day of the first World Cup" },
+    { q: "All 18 matches of the 1930 World Cup were played in which city?", options: ["Montevideo","Buenos Aires","Sao Paulo","Santiago"], answer: 0, sub: "All matches were played in Montevideo at three venues: Estadio Centenario, Estadio Pocitos, and Estadio Parque Central" },
   ],
   1: [
+    // Original questions
     { q: "In the 1930 World Cup final, each team provided the match ball for one half. What was the half-time score before Uruguay switched to their ball?", options: ["0-0","1-2 (Argentina leading)","2-1 (Uruguay leading)","1-1"], answer: 1, sub: "Argentina led 2-1 at half-time with their ball; Uruguay won 4-2 using theirs in the second half" },
     { q: "Which player scored the first ever World Cup goal in 1930 — and in what minute?", options: ["Lucien Laurent, 19th minute","Guillermo Stabile, 8th minute","Pablo Dorado, 15th minute","Louis Laurent, 23rd minute"], answer: 0, sub: "France's Lucien Laurent volleyed home in the 19th minute against Mexico on 13 July 1930" },
     { q: "In the 1967 Intercontinental Cup, Racing Club vs Celtic needed a playoff. Where was it held?", options: ["Uruguay","Spain","Brazil","Chile"], answer: 0, sub: "Played in Montevideo — Racing Club won 1-0" },
@@ -1319,6 +1594,22 @@ const QUESTION_BANK = {
     { q: "How many minutes of added time were played in total across both halves and extra time of the 2022 World Cup final?", options: ["15 minutes","20 minutes","25 minutes","30 minutes"], answer: 2, sub: "Approximately 25 minutes of stoppage time were added across the match periods" },
     { q: "Who was the referee of the 2022 World Cup final?", options: ["Nestor Pitana","Szymon Marciniak","Antonio Mateu Lahoz","Daniele Orsato"], answer: 1, sub: "Poland's Szymon Marciniak refereed Argentina vs France" },
     { q: "In the 1970 World Cup, which match first featured yellow and red cards?", options: ["Mexico vs USSR","Soviet Union vs Mexico","Both names refer to the same match","England vs Romania"], answer: 2, sub: "The opening match Mexico vs Soviet Union on 31 May 1970 was the first with cards — Lovchev received the first yellow" },
+    // New questions
+    { q: "What was the full official name of the stadium that hosted the 1950 World Cup deciding match between Uruguay and Brazil?", options: ["Estadio Jornalista Mario Filho","Estadio do Maracana","Estadio Nacional de Rio de Janeiro","Estadio Olimpico"], answer: 0, sub: "The stadium is formally named the Estadio Jornalista Mario Filho — commonly known as the Maracana — after the journalist who championed its construction" },
+    { q: "How many times did the ball hit the woodwork during the 1966 World Cup final?", options: ["3","1","5","2"], answer: 0, sub: "The crossbar or posts were struck three times during the 1966 final, most famously Hurst's controversial second goal that hit the underside of the bar" },
+    { q: "What nationality was Abel Lafleur, who designed the Jules Rimet Trophy?", options: ["French","Italian","Belgian","Swiss"], answer: 0, sub: "Abel Lafleur was French — he created the gold-plated sterling silver statue depicting Nike standing atop an octagonal base" },
+    { q: "The 1966 Jules Rimet Trophy theft in London — where was it found by Pickles the dog?", options: ["Under a hedge in South Norwood","In a dustbin in Westminster","In a park in Kensington","Behind a shop in Brixton"], answer: 0, sub: "The trophy was stolen from a stamp exhibition in Westminster and found a week later by Pickles under a hedge in South Norwood, London" },
+    { q: "Who was the president of Uruguay when the country hosted the 1930 World Cup?", options: ["Juan Campisteguy","Gabriel Terra","Jose Batlle y Ordonez","Baltasar Brum"], answer: 0, sub: "Juan Campisteguy was President from 1927 to 1931, covering the entire 1930 tournament" },
+    { q: "Which player featured for Brazil in all four World Cups between 1954 and 1966?", options: ["Djalma Santos","Nilton Santos","Garrincha","Didi"], answer: 0, sub: "Djalma Santos played in the 1954, 1958, 1962, and 1966 World Cups, winning in 1958 and 1962" },
+    { q: "What was the precise venue used for the 1970 World Cup third-place play-off?", options: ["Estadio Jalisco in Guadalajara","Estadio Azteca in Mexico City","Estadio Universitario in Monterrey","Estadio Cuauhtemoc in Puebla"], answer: 0, sub: "The third-place match between West Germany and Uruguay was held at the Estadio Jalisco in Guadalajara — Germany won 1-0" },
+    { q: "Which official film documented the 1966 World Cup?", options: ["Goal! The World Cup 1966","The Beautiful Game 1966","England's Glory 1966","Wembley 1966"], answer: 0, sub: "'Goal!' was the official FIFA film of the 1966 tournament — one of the earliest documentary films about a World Cup" },
+    { q: "What were West Germany's exact group stage results at the 1954 World Cup?", options: ["Beat Turkey 4-1, lost to Hungary 8-3, beat Turkey 7-2 in play-off","Beat Turkey 3-0, lost to Hungary 6-1, beat Turkey 5-0","Beat Turkey 4-1, drew with Hungary 2-2, beat Austria 3-1","Beat Turkey 2-0, lost to Hungary 8-3, beat Turkey 4-0"], answer: 0, sub: "West Germany deliberately rested players vs Hungary (losing 8-3), then beat Turkey 7-2 in a play-off — an extraordinary strategy that led to their 'Miracle of Bern' final victory" },
+    { q: "Who was the linesman on the far side whose flag stayed down for Hurst's controversial goal in the 1966 final?", options: ["Karol Galba of Czechoslovakia","Tofiq Bahramov of Azerbaijan","Hans Carlsson of Sweden","Paulo Amaral of Brazil"], answer: 0, sub: "Galba was the linesman on the opposite side — it was Bahramov whose confirmation to referee Dienst led to the goal being given" },
+    { q: "How many spectators attended the 1934 World Cup final between Italy and Czechoslovakia?", options: ["55,000","40,000","70,000","28,000"], answer: 0, sub: "Approximately 55,000 spectators attended the final at the Stadio Nazionale del PNF in Rome — Italy won 2-1 in extra time" },
+    { q: "At the FIFA Congress in which city was the formal decision made to organise the first World Cup?", options: ["Amsterdam in 1928","Paris in 1926","Zurich in 1929","Barcelona in 1927"], answer: 0, sub: "The critical vote at the 1928 FIFA Congress in Amsterdam formally agreed to create a world championship independent of the Olympics" },
+    { q: "Which two players share the record for scoring in the most different World Cup final matches (2 each)?", options: ["Vava and Paul Breitner","Geoff Hurst and Kylian Mbappe","Pele and Zinedine Zidane","Ronaldo and Gerd Muller"], answer: 0, sub: "Vava scored in the 1958 and 1962 finals; Paul Breitner scored in the 1974 and 1982 finals — both scored in two different final matches" },
+    { q: "The 1994 World Cup match at the Pontiac Silverdome was the first indoor World Cup game. Which teams played?", options: ["USA vs Switzerland","USA vs Colombia","Germany vs Bolivia","Brazil vs Russia"], answer: 0, sub: "USA vs Switzerland at the Pontiac Silverdome on 18 June 1994 — the first World Cup match played under a roof" },
+    { q: "What was the approximate crowd at the 1938 World Cup final between Italy and Hungary in Paris?", options: ["45,000","60,000","30,000","75,000"], answer: 0, sub: "Approximately 45,000 spectators attended the final at the Stade Olympique de Colombes — modest by modern standards" },
   ],
 };
 
@@ -1333,11 +1624,71 @@ const ELIM_RANGES = {
   15: [4,10], 10: [3,8], 5: [2,5], 1: [1,3]
 };
 
-// ── SEEDED PRNG ──────────────────────────────────────────────
+// ── SEEDED PRNG (mulberry32 with proper string hash) ────────
+function hashString(str) {
+  let h1 = 0xdeadbeef, h2 = 0x41c6ce57;
+  for (let i = 0; i < str.length; i++) {
+    const ch = str.charCodeAt(i);
+    h1 = Math.imul(h1 ^ ch, 2654435761);
+    h2 = Math.imul(h2 ^ ch, 1597334677);
+  }
+  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+  return (h2 >>> 0) * 4294967296 + (h1 >>> 0);
+}
+
 function seededRandom(seed) {
-  let s = 0;
-  for (let i = 0; i < seed.length; i++) s = ((s << 5) - s + seed.charCodeAt(i)) | 0;
-  return function() { s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; };
+  let s = hashString(seed) >>> 0;
+  if (s === 0) s = 1;
+  return function() {
+    s |= 0; s = s + 0x6D2B79F5 | 0;
+    let t = Math.imul(s ^ s >>> 15, 1 | s);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+
+// ── SEEN QUESTION TRACKING ──────────────────────────────────
+function getSeenQuestions() {
+  try {
+    const raw = localStorage.getItem('1pct_seen_qs');
+    return raw ? JSON.parse(raw) : {};
+  } catch(e) { return {}; }
+}
+
+function saveSeenQuestions(seen) {
+  try { localStorage.setItem('1pct_seen_qs', JSON.stringify(seen)); } catch(e) {}
+}
+
+function markQuestionsSeen(questionList) {
+  const seen = getSeenQuestions();
+  questionList.forEach(q => {
+    const key = String(q.pct);
+    if (!seen[key]) seen[key] = [];
+    // Store a hash of the question text to identify it
+    const qHash = q.q.substring(0, 40);
+    if (!seen[key].includes(qHash)) seen[key].push(qHash);
+  });
+  saveSeenQuestions(seen);
+}
+
+function pickFreshQuestion(pool, pct, rng, seen) {
+  const key = String(pct);
+  const seenList = (seen && seen[key]) || [];
+
+  // Find unseen questions
+  const unseen = pool.filter(q => !seenList.includes(q.q.substring(0, 40)));
+
+  // If all have been seen, reset this tier and pick from full pool
+  const source = unseen.length > 0 ? unseen : pool;
+
+  // If we reset, clear the seen list for this tier
+  if (unseen.length === 0 && seen && seen[key]) {
+    seen[key] = [];
+  }
+
+  const idx = Math.floor(rng() * source.length);
+  return source[idx];
 }
 
 // ── LOGIN SYSTEM ─────────────────────────────────────────────
@@ -1404,13 +1755,19 @@ function saveDailyResult(dateStr, data) {
   try { localStorage.setItem(getDailyKey(dateStr), JSON.stringify(data)); } catch(e) {}
 }
 
-function pickQuestionsSeeded(seed) {
+function pickQuestionsSeeded(seed, trackSeen) {
   const rng = seededRandom(seed);
-  return PERCENTAGES.map(pct => {
+  const seen = trackSeen ? getSeenQuestions() : null;
+  const questions = PERCENTAGES.map(pct => {
     const pool = QUESTION_BANK[pct];
-    const q = pool[Math.floor(rng() * pool.length)];
+    const q = pickFreshQuestion(pool, pct, rng, seen);
     return { ...q, pct };
   });
+  if (trackSeen) {
+    markQuestionsSeen(questions);
+    if (seen) saveSeenQuestions(seen); // save any tier resets
+  }
+  return questions;
 }
 
 function formatDateNice(dateStr) {
@@ -1813,12 +2170,9 @@ function startUnlimited() {
   gameMode = 'unlimited';
   gameDate = null;
   gameCode = null;
-  const qs = PERCENTAGES.map(pct => {
-    const pool = QUESTION_BANK[pct];
-    const q = pool[Math.floor(Math.random() * pool.length)];
-    return { ...q, pct };
-  });
-  startGameWithQuestions(qs);
+  // Use a random seed but with seen-question tracking to avoid repeats
+  const randomSeed = 'unlim_' + Date.now() + '_' + Math.random();
+  startGameWithQuestions(pickQuestionsSeeded(randomSeed, true));
 }
 
 function showPrevDays() {
@@ -2292,6 +2646,11 @@ function init() {
 }
 
 init();
+
+// Register service worker for PWA
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(() => {});
+}
 
 </script>
 </body>
